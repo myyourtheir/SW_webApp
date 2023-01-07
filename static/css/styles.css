@@ -6,11 +6,23 @@ html, body {
   margin: 0%;
 }
 
+#closeFavPipe{
+  display: flex;
+  position: relative;
+  margin-top: 5px;
+  margin-left: 275px;
+  height: 20px;
+  width: 20px;
+}
+
+#closeFavPipe:hover{
+  transition: 0.1s;
+  transform: scale(1.1);
+}
+
 .textFieldButton{
-  display: block; 
-  position: relative; 
-  margin-left: 200px; 
-  margin-bottom: 10px;
+  margin-left: 250px; 
+  margin-bottom: 0px;
   width: 30px;
   height: 20px;
 }
@@ -37,7 +49,8 @@ html, body {
 
 .textField {
   margin-bottom: 1rem;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Courier New, monospace;
+  height: 150px;
 }
 
 .textFieldInput {
@@ -56,30 +69,12 @@ html, body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.valveGate{
-  z-index: 2;
-  position: relative;
-}
-
-.safetyGate{
-  z-index: 2;
-  position: relative;
-}
-.pump{
-  z-index: 1;
-  position: relative;
-}
-.pipeline{
-  z-index: 1;
-  position: relative;
-}
-
 #pipeForm{
 display: none; /*flex*/
 position: absolute  ;
 top: 150px;
 left: 100px;
-height: 150px;
+height: 175px;
 width: 300px;
 z-index: 3;
 border: 1px solid black;

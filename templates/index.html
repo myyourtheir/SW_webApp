@@ -51,11 +51,12 @@
 <!-- пока уберу, это форма для данных трубопровода -->
     <div id="pipeForm">
         <div class = 'textField'>
+            <span id="closeFavPipe"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
             <label class="textFieldLabel">Длина в км:</label> 
-            <input class="textFieldInput" type="number" value="required">
+            <input id="lengthOfPipe" class="textFieldInput" type="number" value="required">
             <label class="textFieldLabel">Диаметр в мм:</label>
-            <input class="textFieldInput" type="number" value="required">
-            <input class ="textFieldButton" type="submit" value="Ок">
+            <input id="diameterOfPipe" class="textFieldInput" type="number" value="required">
+            <input id="pipeFormBtn" class ="textFieldButton" type="submit" value="Ок">
         </div>
     </div>
 

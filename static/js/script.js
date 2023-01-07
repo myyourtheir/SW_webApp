@@ -22,46 +22,76 @@ let x = '100';
 
 let objBtns = document.querySelectorAll('.circleImage')
 
+let pipeline = [];
+let pipeParams = [];
+let pumpParams =[];
+let gateValveParams =[];
 
+pipeForm = document.getElementById('pipeFormBtn');
 
 // трубопровод
 objBtns[0].onclick = function (){
-    dx = '150';
-    let svg = document.getElementsByTagName('svg')[0]; 
+    pipeline.push('pipe');
 
-    let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
-    g.setAttribute('class', 'pipe')
-   
-    let crl1 =  document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    crl1.setAttribute('cx', x);
-    crl1.setAttribute('cy', y);
-    crl1.setAttribute('r', '5');
+    pipeForm = document.getElementById('pipeForm');
+    pipeForm.style.display = 'block';
+    pipeFormBtn = document.getElementById('pipeFormBtn');
+    closeFavPipe = document.getElementById('closeFavPipe');
+    closeFavPipe.onclick = function(){
+        pipeForm.style.display = 'none';
+        document.getElementById('lengthOfPipe').value = '';
+        document.getElementById('diameterOfPipe').value = '';
+    }
+    pipeFormBtn.onclick = function(e, dx = document.getElementById('lengthOfPipe').value){
+        if (document.getElementById('lengthOfPipe').value ==='' ||  document.getElementById('diameterOfPipe').value ==='' ) {
+            warringtext = document.querySelectorAll('.textFieldLabel');
+            for (let i=0; i<warringtext.length; i++){
+            warringtext[i].style.color = 'red';
+            } 
+        }
+        else{
+            pipeParams.push([document.getElementById('lengthOfPipe').value, document.getElementById('diameterOfPipe').value])
 
-    let path1 =  document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    path1.setAttribute("d","M "+ x + " " + y +  " h " +  dx); 
-    path1.style.stroke = "#000";
-    path1.style.strokeWidth = "4px"; 
-    
+            
+            let svg = document.getElementsByTagName('svg')[0]; 
 
-    let path2 =  document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    path2.setAttribute("d","M "+ (parseInt(x) + 15).toString() + " " + y +  " h " +  (parseInt(dx) - 30).toString()); 
-    path2.style.stroke = "transparent";
-    path2.style.strokeWidth = "10"; 
+            let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+            g.setAttribute('class', 'pipe')
+        
+            let crl1 =  document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+            crl1.setAttribute('cx', x);
+            crl1.setAttribute('cy', y);
+            crl1.setAttribute('r', '5');
 
-    x = (parseInt(x) + parseInt(dx)).toString();
+            let path1 =  document.createElementNS("http://www.w3.org/2000/svg", 'path');
+            path1.setAttribute("d","M "+ x + " " + y +  " h " +  dx); 
+            path1.style.stroke = "#000";
+            path1.style.strokeWidth = "4px"; 
+            
 
-    let crl2 =  document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    crl2.setAttribute('cx', x);
-    crl2.setAttribute('cy', y);
-    crl2.setAttribute('r', '5');
+            let path2 =  document.createElementNS("http://www.w3.org/2000/svg", 'path');
+            path2.setAttribute("d","M "+ (parseInt(x) + 15).toString() + " " + y +  " h " +  (parseInt(dx) - 30).toString()); 
+            path2.style.stroke = "transparent";
+            path2.style.strokeWidth = "10"; 
 
-    g.appendChild(crl1);
-    g.appendChild(path1);
-    g.appendChild(path2);
-    g.appendChild(crl2);
-    svg.appendChild(g);
+            x = (parseInt(x) + parseInt(dx)).toString();
 
+            let crl2 =  document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+            crl2.setAttribute('cx', x);
+            crl2.setAttribute('cy', y);
+            crl2.setAttribute('r', '5');
 
+            g.appendChild(crl1);
+            g.appendChild(path1);
+            g.appendChild(path2);
+            g.appendChild(crl2);
+            svg.appendChild(g);
+
+            pipeForm.style.display = 'none';
+            document.getElementById('lengthOfPipe').value = '';
+            document.getElementById('diameterOfPipe').value = '';
+        }
+    }
 }
 
 // насос
@@ -167,8 +197,5 @@ objBtns[3].onclick = function (){
     svg.appendChild(g);
 }
 
-// создание списков для элементов и их характеристик
-let pipeline = [];
-let pipeParams = [];
-let pumpParams =[];
-let gateValveParams =[];
+
+
