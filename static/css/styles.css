@@ -1,0 +1,224 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0%;
+}
+
+.textFieldButton{
+  display: block; 
+  position: relative; 
+  margin-left: 200px; 
+  margin-bottom: 10px;
+  width: 30px;
+  height: 20px;
+}
+
+#mainSVG{
+  left: 0px; 
+  top: 0px; 
+  width: 100%; 
+  height: 100%; 
+  display: block; 
+  min-width: 1445px; 
+  min-height: 3744px; 
+  position: absolute;
+  background-image: none;
+}
+.textFieldLabel {
+  display: block;
+  position: relative;
+  margin-bottom: 0.25rem;
+  font-family: inherit;
+  font-size: 18px;
+  left: 15px;
+}
+
+.textField {
+  margin-bottom: 1rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.textFieldInput {
+  display: block;
+  width: 100%;
+  height: calc(2rem + 2px);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.valveGate{
+  z-index: 2;
+  position: relative;
+}
+
+.safetyGate{
+  z-index: 2;
+  position: relative;
+}
+.pump{
+  z-index: 1;
+  position: relative;
+}
+.pipeline{
+  z-index: 1;
+  position: relative;
+}
+
+#pipeForm{
+display: none; /*flex*/
+position: absolute  ;
+top: 150px;
+left: 100px;
+height: 150px;
+width: 300px;
+z-index: 3;
+border: 1px solid black;
+border-radius: 20px;
+background-color: #E27D60;
+}
+
+
+.menuTextBefore{
+display: none;
+}
+
+
+.menuTextAfter{
+  display: inline-flex;
+  font-family: monospace;
+  font-size: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;
+}
+
+.sideMenuBtn{
+  margin-top: 15px;
+  margin-left: 10px;
+  display: inline-flex;
+  border-radius: 50%;
+  overflow: hidden;
+  border-color: black;
+  border-style: solid;
+  
+}
+
+.sideMenuBtn:hover{
+  box-shadow: 0px 0px 4px 5px rgba(1, 6, 9, 0.2);
+}
+
+.workSpace{
+  position: absolute; 
+  border-width: 1px; 
+  overflow: hidden; 
+  left: 90px; 
+  top: 100px;
+  width: 2000px;
+  height: 900px;
+  /* border-color: rgb(2, 2, 2);
+  border-style: solid;  */
+  background-color: rgb(255, 255, 255); 
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2QwZDBkMCIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDBkMGQwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4="); 
+  background-position: -1px -32px;
+  /* background-color: aqua; */
+}
+
+
+
+.topSide{
+  /* position: sticky;
+  background-color: #1b7579;
+  min-height: 100px;
+  top: 0px;
+  left: 0px;
+  height: 100px;
+  width: 100vw;
+  border-bottom: solid 1px;
+   */
+  overflow: hidden;
+  position: fixed;
+  cursor: default;
+  border-bottom: solid 1px;
+  background-color: #1b7579;
+  z-index: 1;
+  box-shadow: 0px 4px 8px 0 rgba(34, 60, 80, 0.2);
+}
+
+span.circleImage{
+  display: inline-flex;
+  border-radius: 50%;
+  overflow: hidden;
+  border-color: black;
+  border-style: solid ;
+  background-color: white;
+  
+  /* content: ""; */
+}
+
+span.circleImage:hover{
+  box-shadow: 0px 0px 4px 5px rgba(1, 6, 9, 0.2);
+  transition: 0.1s;
+  transform: scale(1.05);
+  
+}
+
+ul.sideMenuList li{
+  list-style-type: none;
+  padding-top: 50px;
+}
+
+li.objectButtons{
+  text-decoration: none;
+  align-items: center;  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.leftSide {
+    /* 
+    
+    border-color: black;
+    
+    min-width: 90px; 
+    position: fixed; 
+    
+    top: 101px; 
+    left: 0;
+    bottom: 0px;
+    background-color: #36a0a3;
+    overflow: visible; 
+    width: 90px; */
+    position: fixed;
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2); 
+    background-color: #36a0a3;
+    border-color: black;
+    border-right: solid 1px;
+    min-width: 90px; 
+    left: 0px;
+    z-index: 1;
+    overflow: visible;
+    top: 100px; 
+    width: 90px;
+    bottom: 0px;
+  }
+
+.sideMenuList{
+  padding-left: 10px;
+  margin-top: 0%;
+  }
+
+
+  
+
+
+

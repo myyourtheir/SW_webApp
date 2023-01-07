@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link type = "text/css" rel="stylesheet" href="{{url_for('static', filename = 'css/styles.css')}}">
+    <meta meta charset="UTF-8" content="width=device-width, user-scalable=no">
+    <meta name="veiwpoint" >
+    <title>Расчет трубопроводов</title>
+</head>
+
+<body>
+    <!-- Верхняя часть-->
+    <div class="topSide" style="top: 0px; left: 0px; right: 0px; height: 100px;">
+        <div style="align-items: center">
+            <span class="sideMenuBtn"> <img src="{{url_for('static', filename = 'images/menuButton.svg')}}" alt="Меню"  height="65px" width="65px"></span>
+        </div>  
+    </div>
+
+    <!-- Меню слева для добавления элементов в т/п -->
+    <div class = "leftSide">
+        <div style=" display: flex; margin-top: 0%;">
+            <ul class = "sideMenuList">
+                <li class = "objectButtons">
+                    <span class="circleImage"><img src="{{url_for('static', filename = 'images/PipeFav.svg')}}" alt="Pipeline" height="65px" width="65px"></span>
+                    <span class="menuTextBefore">Трубопровод</span>
+                </li>
+                <li class = "objectButtons">
+                    <span class="circleImage"><img src="{{url_for('static', filename = 'images/PumpFav.svg')}}" alt="Pump"  height="65px" width="65px"></span>
+                    <span class="menuTextBefore">Насос</span>
+                </li>
+                <li class = "objectButtons" >
+                    <span class="circleImage"><img src="{{url_for('static', filename = 'images/ValveGateFav.svg')}}" alt="Pump"  height="65px" width="65px"></span>
+                    <span class="menuTextBefore">Задвижка</span>
+                </li>
+                <li class = "objectButtons">
+                    <span class="circleImage"><img src="{{url_for('static', filename = 'images/SafetyValveFav.svg')}}" alt="Pump"  height="65px" width="65px"></span>
+                    <span class="menuTextBefore">Пред. клапан</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!--Рабочая область-->
+    <div class="workSpace" >
+        <svg id="mainSVG" >
+            
+        </svg>
+    </div>
+
+
+<!-- пока уберу, это форма для данных трубопровода -->
+    <div id="pipeForm">
+        <div class = 'textField'>
+            <label class="textFieldLabel">Длина в км:</label> 
+            <input class="textFieldInput" type="number" value="required">
+            <label class="textFieldLabel">Диаметр в мм:</label>
+            <input class="textFieldInput" type="number" value="required">
+            <input class ="textFieldButton" type="submit" value="Ок">
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename = 'js/script.js')}}"></script>
+</body>
+</html>
