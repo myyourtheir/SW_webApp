@@ -1,4 +1,11 @@
 
+
+function setColorForLables(color){
+    warringtext = document.querySelectorAll('.textFieldLabel');
+            for (let i=0; i<warringtext.length; i++){
+            warringtext[i].style.color = color;
+            } 
+}
 // Выдвижение меню
 let menuBtn = document.querySelector('.sideMenuBtn')
 let listBtns = document.querySelectorAll('li span')
@@ -31,7 +38,7 @@ pipeForm = document.getElementById('pipeFormBtn');
 
 // трубопровод
 objBtns[0].onclick = function (){
-    pipeline.push('pipe');
+    
 
     pipeForm = document.getElementById('pipeForm');
     pipeForm.style.display = 'block';
@@ -44,12 +51,10 @@ objBtns[0].onclick = function (){
     }
     pipeFormBtn.onclick = function(e, dx = document.getElementById('lengthOfPipe').value){
         if (document.getElementById('lengthOfPipe').value ==='' ||  document.getElementById('diameterOfPipe').value ==='' ) {
-            warringtext = document.querySelectorAll('.textFieldLabel');
-            for (let i=0; i<warringtext.length; i++){
-            warringtext[i].style.color = 'red';
-            } 
+            setColorForLables('red');
         }
         else{
+            pipeline.push('pipe');
             pipeParams.push([document.getElementById('lengthOfPipe').value, document.getElementById('diameterOfPipe').value])
 
             
@@ -90,47 +95,82 @@ objBtns[0].onclick = function (){
             pipeForm.style.display = 'none';
             document.getElementById('lengthOfPipe').value = '';
             document.getElementById('diameterOfPipe').value = '';
+            setColorForLables('black');
         }
     }
 }
 
 // насос
 objBtns[1].onclick = function (){
-    dy = '35';
-    let svg = document.getElementsByTagName('svg')[0]; 
-
-    let g = document.createElementNS("http://www.w3.org/2000/svg", 'g'); 
-    g.setAttribute('class', 'pump')
-    
-    let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    path.setAttribute("d","M "+ x + " " + y +  " L " + x + " " + (parseInt(y) - parseInt(dy)).toString());
-    path.style.stroke = "#000";
-    path.style.strokeWidth = "2px";
-
-    let crl1 = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    crl1.setAttribute('cx', x);
-    crl1.setAttribute('cy', (y-dy - 25));
-    crl1.setAttribute('r', '12.5');
-    crl1.setAttribute('stroke-dasharray', '19.6349');
-    crl1.setAttribute('stroke-dashoffset', '19.7');
-    crl1.setAttribute('fill', 'transparent');
-    crl1.setAttribute('stroke', '#000');
-    crl1.setAttribute('stroke-width', '25');    
     
 
-    let crl2 = document.createElementNS("http://www.w3.org/2000/svg", 'circle')
-    crl2.setAttribute('cx', x);
-    crl2.setAttribute('cy', (y-dy - 25));
-    crl2.setAttribute('r', '25');
-    crl2.setAttribute('stroke', '#000');
-    crl2.setAttribute('stroke-width', '2'); 
-    crl2.setAttribute('fill', 'white');
+    pumpForm = document.getElementById('pumpForm');
+    pumpForm.style.display = 'block';
+    pumpFormBtn = document.getElementById('pumpFormBtn');
+    closeFavPump = document.getElementById('closeFavPump');
+    closeFavPump.onclick = function(){
+        pumpForm.style.display = 'none';
+        document.getElementById('aOfPump').value = '';
+        document.getElementById('bOfPump').value = '';
+        document.getElementById('timePump').value = '';
+        document.getElementById('Run-outTimeOfPump').value = '';
+    }
+    pumpFormBtn.onclick = function(){
+        if (document.getElementById('aOfPump').value ==='' ||  document.getElementById('bOfPump').value ===''
+                ||  document.getElementById('timePump').value ==='' ||  document.getElementById('Run-outTimeOfPump').value ==='') {
+            setColorForLables('red');
+        }
+        else{
+            pipeline.push('pump');
+            pumpParams.push([document.getElementById('aOfPump').value, document.getElementById('bOfPump').value,
+                document.getElementById('pumpSelect').value, document.getElementById('timePump').value, 
+                document.getElementById('Run-outTimeOfPump').value])
 
+            dy = '35';
+            let svg = document.getElementsByTagName('svg')[0]; 
+        
+            let g = document.createElementNS("http://www.w3.org/2000/svg", 'g'); 
+            g.setAttribute('class', 'pump')
+            
+            let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+            path.setAttribute("d","M "+ x + " " + y +  " L " + x + " " + (parseInt(y) - parseInt(dy)).toString());
+            path.style.stroke = "#000";
+            path.style.strokeWidth = "2px";
+        
+            let crl1 = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+            crl1.setAttribute('cx', x);
+            crl1.setAttribute('cy', (y-dy - 25));
+            crl1.setAttribute('r', '12.5');
+            crl1.setAttribute('stroke-dasharray', '19.6349');
+            crl1.setAttribute('stroke-dashoffset', '19.7');
+            crl1.setAttribute('fill', 'transparent');
+            crl1.setAttribute('stroke', '#000');
+            crl1.setAttribute('stroke-width', '25');    
+            
+        
+            let crl2 = document.createElementNS("http://www.w3.org/2000/svg", 'circle')
+            crl2.setAttribute('cx', x);
+            crl2.setAttribute('cy', (y-dy - 25));
+            crl2.setAttribute('r', '25');
+            crl2.setAttribute('stroke', '#000');
+            crl2.setAttribute('stroke-width', '2'); 
+            crl2.setAttribute('fill', 'white');
+        
+        
+            g.appendChild(path);
+            g.appendChild(crl2);
+            g.appendChild(crl1);
+            svg.appendChild(g);
 
-    g.appendChild(path);
-    g.appendChild(crl2);
-    g.appendChild(crl1);
-    svg.appendChild(g);
+            pumpForm.style.display = 'none';
+            document.getElementById('aOfPump').value = '';
+            document.getElementById('bOfPump').value = '';
+            document.getElementById('timePump').value = '';
+            document.getElementById('Run-outTimeOfPump').value = '';
+            setColorForLables('black');
+            
+        }
+    }
 }
 
 // задвижка

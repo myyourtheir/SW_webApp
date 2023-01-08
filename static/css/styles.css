@@ -6,7 +6,50 @@ html, body {
   margin: 0%;
 }
 
-#closeFavPipe{
+#pipeForm{
+  display: none; 
+  position: fixed;
+  top: 150px;
+  left: 100px;
+  height: 190px;
+  width: 300px;
+  z-index: 4;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #deca16;
+  }
+
+#pumpForm{
+  display: none; 
+  position: fixed;
+  top: 150px;
+  left: 100px;
+  height: 320px;
+  width: 310px;
+  z-index: 3;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #deca16;
+}
+
+.objSelect{
+  margin-top: 10px;
+  display: block;
+  width: 60%;
+  margin-left: 7.5px;
+  height: 30px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.closeFav{
   display: flex;
   position: relative;
   margin-top: 5px;
@@ -15,16 +58,28 @@ html, body {
   width: 20px;
 }
 
-#closeFavPipe:hover{
+.closeFav:hover{
   transition: 0.1s;
   transform: scale(1.1);
 }
 
 .textFieldButton{
-  margin-left: 250px; 
-  margin-bottom: 0px;
-  width: 30px;
-  height: 20px;
+  position: relative;
+  margin-left: 190px; 
+  /* margin-bottom: 0px; */
+  margin-top: 7px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 18px;
+  width: 100px;
+  height: 27px;
+  background-color: bisque;
+  border: solid 0.5px black;
+}
+
+.textFieldButton:hover{
+  box-shadow: 0px 0px 2px 2px rgba(1, 6, 9, 0.2);
+
 }
 
 #mainSVG{
@@ -48,15 +103,18 @@ html, body {
 }
 
 .textField {
-  margin-bottom: 1rem;
+  position: relative;
   font-family: Courier New, monospace;
-  height: 150px;
+  line-height: 24px; 
+  height: 100%;
+  width: 100%;
 }
 
 .textFieldInput {
-  display: block;
-  width: 100%;
-  height: calc(2rem + 2px);
+  display: inline;
+  width: 50%;
+  margin-left: 7.5px;
+  height: 30px;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 400;
@@ -69,18 +127,25 @@ html, body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-#pipeForm{
-display: none; /*flex*/
-position: absolute  ;
-top: 150px;
-left: 100px;
-height: 175px;
-width: 300px;
-z-index: 3;
-border: 1px solid black;
-border-radius: 20px;
-background-color: #E27D60;
+.textFieldInputTime{
+  margin-top: 5px;
+  display: inline;
+  width: 30%;
+  margin-left: 7.5px;
+  height: 30px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+
 
 
 .menuTextBefore{
@@ -118,7 +183,7 @@ display: none;
   overflow: hidden; 
   left: 90px; 
   top: 100px;
-  width: 2000px;
+  width: 6000px;
   height: 900px;
   /* border-color: rgb(2, 2, 2);
   border-style: solid;  */
