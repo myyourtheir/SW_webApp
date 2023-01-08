@@ -38,16 +38,19 @@ pipeForm = document.getElementById('pipeFormBtn');
 
 // трубопровод
 objBtns[0].onclick = function (){
-    
+    function setNonePipe(){
+        pipeForm = document.getElementById('pipeForm');
+        pipeForm.style.display = 'none';
+        document.getElementById('lengthOfPipe').value = '';
+        document.getElementById('diameterOfPipe').value = '';
+    }
 
     pipeForm = document.getElementById('pipeForm');
     pipeForm.style.display = 'block';
     pipeFormBtn = document.getElementById('pipeFormBtn');
     closeFavPipe = document.getElementById('closeFavPipe');
     closeFavPipe.onclick = function(){
-        pipeForm.style.display = 'none';
-        document.getElementById('lengthOfPipe').value = '';
-        document.getElementById('diameterOfPipe').value = '';
+        setNonePipe();
     }
     pipeFormBtn.onclick = function(e, dx = document.getElementById('lengthOfPipe').value){
         if (document.getElementById('lengthOfPipe').value ==='' ||  document.getElementById('diameterOfPipe').value ==='' ) {
@@ -92,9 +95,7 @@ objBtns[0].onclick = function (){
             g.appendChild(crl2);
             svg.appendChild(g);
 
-            pipeForm.style.display = 'none';
-            document.getElementById('lengthOfPipe').value = '';
-            document.getElementById('diameterOfPipe').value = '';
+            setNonePipe();
             setColorForLables('black');
         }
     }
@@ -102,18 +103,21 @@ objBtns[0].onclick = function (){
 
 // насос
 objBtns[1].onclick = function (){
-    
+    function setNonePump(){
+        pumpForm = document.getElementById('pumpForm');
+        pumpForm.style.display = 'none';
+        document.getElementById('aOfPump').value = '';
+        document.getElementById('bOfPump').value = '';
+        document.getElementById('timePump').value = '';
+        document.getElementById('Run-outTimeOfPump').value = '';
+    }
 
     pumpForm = document.getElementById('pumpForm');
     pumpForm.style.display = 'block';
     pumpFormBtn = document.getElementById('pumpFormBtn');
     closeFavPump = document.getElementById('closeFavPump');
     closeFavPump.onclick = function(){
-        pumpForm.style.display = 'none';
-        document.getElementById('aOfPump').value = '';
-        document.getElementById('bOfPump').value = '';
-        document.getElementById('timePump').value = '';
-        document.getElementById('Run-outTimeOfPump').value = '';
+        setNonePump();
     }
     pumpFormBtn.onclick = function(){
         if (document.getElementById('aOfPump').value ==='' ||  document.getElementById('bOfPump').value ===''
@@ -162,11 +166,7 @@ objBtns[1].onclick = function (){
             g.appendChild(crl1);
             svg.appendChild(g);
 
-            pumpForm.style.display = 'none';
-            document.getElementById('aOfPump').value = '';
-            document.getElementById('bOfPump').value = '';
-            document.getElementById('timePump').value = '';
-            document.getElementById('Run-outTimeOfPump').value = '';
+            setNonePump();
             setColorForLables('black');
             
         }
@@ -175,27 +175,59 @@ objBtns[1].onclick = function (){
 
 // задвижка
 objBtns[2].onclick = function (){
-    dy = '20';
-    dx = '40';
-    let svg = document.getElementsByTagName('svg')[0]; 
-    let g = document.createElementNS("http://www.w3.org/2000/svg", 'g'); 
-    g.setAttribute('class', 'gateValve')
+    function setNoneGateValve(){
+        gateValveForm = document.getElementById('gateValveForm');
+        gateValveForm.style.display = 'none';
+        document.getElementById('timeGateValve').value ='';
+        document.getElementById('Run-outTimeOfGateValve').value ='';
+        document.getElementById('percentGateValve').value ='';
+    }
+    
+    gateValveForm = document.getElementById('gateValveForm');
+    gateValveForm.style.display = 'block';
+    gateValveFormBtn = document.getElementById('gateValveFormBtn');
+    closeFavGateValve = document.getElementById('closeFavGateValve');
+    closeFavGateValve.onclick = function(){
+        setNoneGateValve();
+    }
 
-    let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-    pg.setAttribute('fill', 'white')
-    pg.setAttribute('stroke', '#000')
-    pg.setAttribute("points",
-        x + "," + (parseInt(y) + parseInt(dy/2)).toString() + 
-        ' ' + (parseInt(x) + parseInt(dx)).toString()+ "," + (parseInt(y) - parseInt(dy/2)).toString() + 
-        ' ' + (parseInt(x) + parseInt(dx)).toString() + "," +  (parseInt(y) + parseInt(dy/2)).toString()+
-        ' ' + x + "," +  (parseInt(y) - parseInt(dy/2)).toString()
-        );
-    pg.setAttribute('stroke-width', '2'); 
+    gateValveFormBtn.onclick = function(){
+        if (document.getElementById('timeGateValve').value ==='' ||  document.getElementById('Run-outTimeOfGateValve').value ===''
+            ||  document.getElementById('percentGateValve').value ==='') {
+        setColorForLables('red');
+        }
+        else{
+            pipeline.push('gateValve');
+            gateValveParams.push([document.getElementById('gateValveSelect').value, document.getElementById('timeGateValve').value,
+            document.getElementById('Run-outTimeOfGateValve').value, document.getElementById('percentGateValve').value])
+    
 
-    x = (parseInt(x) + parseInt(dx)).toString();
+            dy = '20';
+            dx = '40';
+            let svg = document.getElementsByTagName('svg')[0]; 
+            let g = document.createElementNS("http://www.w3.org/2000/svg", 'g'); 
+            g.setAttribute('class', 'gateValve')
 
-    g.appendChild(pg);
-    svg.appendChild(g);
+            let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+            pg.setAttribute('fill', 'white')
+            pg.setAttribute('stroke', '#000')
+            pg.setAttribute("points",
+                x + "," + (parseInt(y) + parseInt(dy/2)).toString() + 
+                ' ' + (parseInt(x) + parseInt(dx)).toString()+ "," + (parseInt(y) - parseInt(dy/2)).toString() + 
+                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," +  (parseInt(y) + parseInt(dy/2)).toString()+
+                ' ' + x + "," +  (parseInt(y) - parseInt(dy/2)).toString()
+                );
+            pg.setAttribute('stroke-width', '2'); 
+
+            x = (parseInt(x) + parseInt(dx)).toString();
+
+            g.appendChild(pg);
+            svg.appendChild(g);
+
+            setNoneGateValve();
+            setColorForLables('black');
+        }
+    }
 }
 
 // пред.клапан

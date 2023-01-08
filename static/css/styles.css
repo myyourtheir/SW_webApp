@@ -32,6 +32,19 @@ html, body {
   background-color: #deca16;
 }
 
+#gateValveForm{
+  display: none; 
+  position: fixed;
+  top: 300px;
+  left: 100px;
+  height: 260px;
+  width: 310px;
+  z-index: 4;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #deca16;
+}
+
 .objSelect{
   margin-top: 10px;
   display: block;
@@ -95,6 +108,7 @@ html, body {
 }
 .textFieldLabel {
   display: block;
+  font-weight: bold;
   position: relative;
   margin-bottom: 0.25rem;
   font-family: inherit;

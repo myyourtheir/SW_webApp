@@ -82,7 +82,7 @@
             <span style="font-family: inherit; display: inline;"> <input id="timePump" class="textFieldInputTime" type="number" value="required" > 
                 сек</span>
 
-             <label class="textFieldLabel">Время выбега:</label>
+            <label class="textFieldLabel">Время выбега:</label>
             <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfPump" class="textFieldInputTime" type="number" value="required" > 
                 сек</span>
             <input id="pumpFormBtn" class ="textFieldButton" type="submit" value="Добавить">
@@ -90,6 +90,28 @@
     </div>
 
 
+    <!-- форма для данных задвижки -->
+    <div id="gateValveForm">
+        <div class = 'textField'>
+            <span id="closeFavGateValve"  class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
+
+            <select name="gateValveSelect" id="gateValveSelect" class="objSelect">
+                <option value="1">Открывается на</option>
+                <option value="2">Закрывается на</option>
+            </select>
+            <span style="font-family: inherit; display: inline;"> <input id="timeGateValve" class="textFieldInputTime" type="number" value="required" > 
+                сек</span>
+
+            <label class="textFieldLabel">Время открытия/закрытия:</label>
+            <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfGateValve" class="textFieldInputTime" type="number" value="required" > 
+                сек</span>
+
+            <label class="textFieldLabel">Процент открытия/закрытия:</label>
+            <input id="percentGateValve" class="textFieldInput" type="number" value="required">
+
+            <input id="gateValveFormBtn" class ="textFieldButton" type="submit" value="Добавить">
+        </div>
+    </div>
 
     <script src="{{url_for('static', filename = 'js/script.js')}}"></script>
 </body>
