@@ -12,7 +12,7 @@ html, body {
   top: 150px;
   left: 100px;
   height: 190px;
-  width: 300px;
+  width: 310px;
   z-index: 4;
   border: 1px solid black;
   border-radius: 20px;
@@ -22,7 +22,7 @@ html, body {
 #pumpForm{
   display: none; 
   position: fixed;
-  top: 150px;
+  top: 200px;
   left: 100px;
   height: 320px;
   width: 310px;
@@ -39,7 +39,7 @@ html, body {
   left: 100px;
   height: 260px;
   width: 310px;
-  z-index: 4;
+  z-index: 2;
   border: 1px solid black;
   border-radius: 20px;
   background-color: #deca16;
