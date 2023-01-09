@@ -6,6 +6,52 @@ function setColorForLables(color){
             warringtext[i].style.color = color;
             } 
 }
+
+let pipeline = [];
+let pipeParams = [];
+let pumpParams =[];
+let gateValveParams =[];
+
+// Отправка запроса на сервер для расчета и получение ответа
+resFav = document.querySelector('.resultFav');
+resFav.onclick = function(){
+    if (pipeline.includes('pipe')){
+        req = {"pipeline": pipeline,
+            "pipeParams": pipeParams,
+            "pumpParams": pumpParams,
+            "gateValveParams":gateValveParams
+            }
+        fetch('/index', {
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            method : 'POST',
+            body : JSON.stringify(req)
+        })
+        .then(function (response){
+
+            if(response.ok) {
+                response.json()
+                .then(function(response) {
+                    console.log(response);
+                });
+            }
+            else {
+                throw Error('Something went wrong');
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+    else{
+        condLbl = document.getElementById('conditionLbl');
+        condLbl.innerHTML = 'Добавьте элементы в трубопровод'
+    }
+}
+// 
+
+
 // Выдвижение меню
 let menuBtn = document.querySelector('.sideMenuBtn')
 let listBtns = document.querySelectorAll('li span')
@@ -24,15 +70,13 @@ menuBtn.onclick = function(){
 
 let y = '150';
 let x = '100';
+// 
 
 // действия кнопок
 
 let objBtns = document.querySelectorAll('.circleImage')
 
-let pipeline = [];
-let pipeParams = [];
-let pumpParams =[];
-let gateValveParams =[];
+
 
 pipeForm = document.getElementById('pipeFormBtn');
 
@@ -100,6 +144,7 @@ objBtns[0].onclick = function (){
         }
     }
 }
+// 
 
 // насос
 objBtns[1].onclick = function (){
@@ -172,6 +217,7 @@ objBtns[1].onclick = function (){
         }
     }
 }
+// 
 
 // задвижка
 objBtns[2].onclick = function (){
@@ -229,6 +275,7 @@ objBtns[2].onclick = function (){
         }
     }
 }
+// 
 
 // пред.клапан
 objBtns[3].onclick = function (){
