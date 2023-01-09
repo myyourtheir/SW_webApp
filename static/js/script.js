@@ -102,7 +102,7 @@ objBtns[0].onclick = function (){
         }
         else{
             pipeline.push('pipe');
-            pipeParams.push([document.getElementById('lengthOfPipe').value, document.getElementById('diameterOfPipe').value])
+            pipeParams.push([parseInt(document.getElementById('lengthOfPipe').value), parseInt(document.getElementById('diameterOfPipe').value)])
 
             
             let svg = document.getElementsByTagName('svg')[0]; 
@@ -171,9 +171,9 @@ objBtns[1].onclick = function (){
         }
         else{
             pipeline.push('pump');
-            pumpParams.push([document.getElementById('aOfPump').value, document.getElementById('bOfPump').value,
-                document.getElementById('pumpSelect').value, document.getElementById('timePump').value, 
-                document.getElementById('Run-outTimeOfPump').value])
+            pumpParams.push([parseFloat(document.getElementById('aOfPump').value), parseFloat(document.getElementById('bOfPump').value),
+            parseInt(document.getElementById('pumpSelect').value), parseFloat(document.getElementById('timePump').value), 
+            parseFloat(document.getElementById('Run-outTimeOfPump').value)])
 
             dy = '35';
             let svg = document.getElementsByTagName('svg')[0]; 
@@ -244,8 +244,8 @@ objBtns[2].onclick = function (){
         }
         else{
             pipeline.push('gateValve');
-            gateValveParams.push([document.getElementById('gateValveSelect').value, document.getElementById('timeGateValve').value,
-            document.getElementById('Run-outTimeOfGateValve').value, document.getElementById('percentGateValve').value])
+            gateValveParams.push([parseInt(document.getElementById('gateValveSelect').value), parseFloat(document.getElementById('timeGateValve').value),
+            parseInt(document.getElementById('Run-outTimeOfGateValve').value), parseInt(document.getElementById('percentGateValve').value)])
     
 
             dy = '20';

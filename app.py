@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
+from background import calculate
+import sys
+
+# print(sys.path)
 
 app = Flask(__name__)
 app.config.from_object(__name__)
