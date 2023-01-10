@@ -228,6 +228,41 @@ display: none;
   box-shadow: 0px 4px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
+.toolbarItem{
+  position: relative;
+  margin-right: 12px;
+  font-size: 18px;
+  /* border: solid black 1px; */
+  text-decoration: none;
+  color: black;
+}
+
+.toolBar{
+  /* display: inline;
+  position: relative;
+  margin-top: 80%px; 
+  margin-left: 2%;
+  align-items: center;
+  width: 150px; */
+  position: absolute;
+  padding-left: 95px; 
+  box-sizing: border-box; 
+  top: 70px;
+}
+
+#envCond{
+  display: none; 
+  position: fixed;
+  top: 100px;
+  left: 150px;
+  height: 245px;
+  width: 310px;
+  z-index: 2;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #bfbcbc;
+}
+
 #conditionLbl{
   font-size: 22px;
   font-family: 'Courier New', Courier, monospace;

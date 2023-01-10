@@ -6,17 +6,19 @@ function setColorForLables(color){
             warringtext[i].style.color = color;
             } 
 }
-
+let condParams =[[1000, 850, 10]];
 let pipeline = [];
 let pipeParams = [];
 let pumpParams =[];
 let gateValveParams =[];
 
+
 // Отправка запроса на сервер для расчета и получение ответа
 resFav = document.querySelector('.resultFav');
 resFav.onclick = function(){
     if (pipeline.includes('pipe')){
-        req = {"pipeline": pipeline,
+        req = {"condParams": condParams,
+            "pipeline": pipeline,
             "pipeParams": pipeParams,
             "pumpParams": pumpParams,
             "gateValveParams":gateValveParams
@@ -73,6 +75,42 @@ let x = '100';
 // 
 
 // действия кнопок
+
+// Меню параметров среды
+let toolBarInnerCondBtn = document.getElementById('toolBarInnerConditions');
+toolBarInnerCondBtn.onclick = function(){
+function setNoneConv(){
+    let envCond = document.getElementById('envCond');
+        envCond.style.display = 'none';
+        document.getElementById('timeToIter').value = '1000';
+        document.getElementById('density').value = '850';
+        document.getElementById('viscosity').value = '10';
+}
+
+    let envCond = document.getElementById('envCond');
+    envCond.style.display = 'block';
+    let closeFavCond = document.getElementById('closeFavCond')
+    closeFavCond.onclick = function(){
+        setNoneConv()
+    }
+
+    let envCondBtn = document.getElementById('envCondBtn')
+    envCondBtn.onclick = function(){
+        if (condParams.length === 0){
+        condParams.push([parseInt(document.getElementById('timeToIter').value), parseInt(document.getElementById('density').value), parseInt(document.getElementById('viscosity').value)])
+        setNoneConv();
+    }
+        else{
+            condParams.pop();
+            condParams.push([parseInt(document.getElementById('timeToIter').value), parseInt(document.getElementById('density').value), parseInt(document.getElementById('viscosity').value)])
+            setNoneConv();
+        }
+    }
+
+}
+
+// 
+
 
 let objBtns = document.querySelectorAll('.circleImage')
 

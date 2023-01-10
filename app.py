@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
-from background import calculate
+# from background import calculate
 import sys
 
 # print(sys.path)

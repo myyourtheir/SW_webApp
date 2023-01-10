@@ -12,9 +12,32 @@
     <div class="topSide" style="top: 0px; left: 0px; right: 0px; height: 100px;">
         <div style="align-items: center">
             <span class="sideMenuBtn"> <img src="{{url_for('static', filename = 'images/menuButton.svg')}}" alt="Меню"  height="65px" width="65px"></span>
+             <div class="toolBar">
+                <a href="#" class="toolbarItem">Файл</a>
+                <a href="#" class="toolbarItem" id="toolBarInnerConditions">Параметры среды</a>
+            </div>  
             <span id="conditionLbl"></span>
             <span  class="resultFav"> <img src="{{url_for('static', filename = 'images/resultFav.svg')}}" alt="Расчитать" height="50px" width="50px"> </span>
+            
         </div>  
+    </div>
+
+    <!-- Параметры среды -->
+    <div id="envCond">
+        <div class = 'textField'>
+            <span id="closeFavCond" class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
+            
+            <label class="textFieldLabel">Время расчета</label> 
+            <span style="font-family: inherit; display: inline; "><input id="timeToIter" class="textFieldInput" type="number" value="1000"> сек </span>
+            
+            <label class="textFieldLabel">Плотность:</label>
+            <span><input id="density" class="textFieldInput" type="number" value="850">кг/м3</span>
+
+            <label class="textFieldLabel">Вязкость:</label>
+            <span><input id="viscosity" class="textFieldInput" type="number" value="10">сСт</span>
+            
+            <input id="envCondBtn" class ="textFieldButton" type="submit" value="Добавить">
+        </div>
     </div>
 
     <!-- Меню слева для добавления элементов в т/п -->

@@ -5,8 +5,23 @@ import json
 
 def calculate(Json):
     data = json.dumps(Json)
-    return data
+    data = json.loads(data) #получаем словарь с параметрами
+    for i in data['pipeline']:
+        if i == 'pipe':
+
+        elif i =='pump':
+
+        elif i =='gateValve':
+
+
+        else:
+            continue
+            
+    return type(data)
     
+
+
+
 
 if __name__ =='__main__':
     js = {'pipeline': ['pipe', 'pump', 'pipe'], 
