@@ -1,7 +1,18 @@
 import numpy as np
 
+o = 0.01/ 1000
+w0 = 3000
+g = 9.81
+c = 1000
+with open("Example.txt") as text_z:
+            vis_otm_str = text_z.read().split(',')
+            global vis_otm
+            vis_otm = []
+            for x in vis_otm_str:
+                x = int(x)
+                vis_otm.append(x)
+            text_z.close()
 
-#T = L / (N * c)
 
 def find_lyam(Re, eps, d):
         if Re < 2320:
@@ -14,7 +25,7 @@ def find_lyam(Re, eps, d):
             lyam1 = 0.11 * (eps) ** 0.25
         return (lyam1)
         
-def find_Jb(Davleniya, Skorosty, d, i):
+def find_Jb(Davleniya, Skorosty, d, i, v, ro, T):
     Vjb = Skorosty
     Re = abs(Vjb) * d / v
     lyamjb = find_lyam(Re, o / d, d)
@@ -22,7 +33,7 @@ def find_Jb(Davleniya, Skorosty, d, i):
         Skorosty) * T * c / (2 * d) + T * ro * c * g * (vis_otm[i + 1] - vis_otm[i]) / 1000
     return (Jb)
 
-def find_Ja(Davleniya, Skorosty, d, i):
+def find_Ja(Davleniya, Skorosty, d, i, v, ro, T):
     Vja = Skorosty
     Re = abs(Vja) * d / v
     lyamja = find_lyam(Re, o / d, d)
@@ -30,11 +41,11 @@ def find_Ja(Davleniya, Skorosty, d, i):
         Skorosty) * T * c / (2 * d) - T * ro * c * g * (vis_otm[i] - vis_otm[i - 1]) / 1000
     return (Ja)
 
-def count_H(p, i, V):
+def count_H(p, i, V, ro):
     H = p / (ro * g) + vis_otm[i] + (V ** 2) / (2 * g)
     return H
 
-def pump_method(P, V, i, a, b, char, chto_vivodim, d, t_vkl, t_char):
+def pump_method(P, V, i, a, b, char, chto_vivodim, d, t_vkl, t_char, t, v, ro, T):
     ''' char( 0 - насоса всегда работает, 1 - насос вкл на tt секунде, 2 - насос выкл на tt сек, другое - выключен)'''
 
     if char == 0:
@@ -58,31 +69,31 @@ def pump_method(P, V, i, a, b, char, chto_vivodim, d, t_vkl, t_char):
 
     a = (w / w0) ** 2 * a  # 302.06   Характеристика насоса # b = 8 * 10 ** (-7)
     S = np.pi * (d / 2) ** 2
-    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i)
-    Jb = find_Jb(P[-1][i + 2], V[-1][i + 2], d, i)
+    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
+    Jb = find_Jb(P[-1][i + 2], V[-1][i + 2], d, i, v, ro, T)
     VV = (-c / g + (
             (c / g) ** 2 - b * (S * 3600) ** 2 * ((Jb - Ja) / (ro * g) - a)) ** 0.5) / (
                     b * (S * 3600) ** 2)
     p1 = (Ja - ro * c * VV)
     p2 = (Jb + ro * c * VV)
-    H1 = count_H(p1, i, VV)
-    H2 = count_H(p2, i, VV)
+    H1 = count_H(p1, i, VV, ro)
+    H2 = count_H(p2, i, VV, ro)
 
     if chto_vivodim == 1:
         return [p1, VV, H1]
     else:
         return [p2, VV, H2]
 
-def pipe_method(P, V, i, d):
+def pipe_method(P, V, i, d, v, ro, T):
     """Условие, может быть, нужно будет переписать"""
-    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i)
-    Jb = find_Jb(P[-1][i + 1], V[-1][i + 1], d, i)
+    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
+    Jb = find_Jb(P[-1][i + 1], V[-1][i + 1], d, i, v, ro, T)
     pp = (Ja + Jb) / (2)
     VV = (Ja - Jb) / (2 * ro * c)
-    H = count_H(pp, i, VV)
+    H = count_H(pp, i, VV, ro)
     return [pp, VV, H]
 
-def tap_method(P, V, i, chto_vivodim, char, t_char, d, t_otkr, procent):
+def tap_method(P, V, i, chto_vivodim, char, t_char, d, t_otkr, procent ,t, v, ro, T):
     ''' char( 0 - кран всегда открыт, 1 - кран открывается на tt секунде, 2 - кран закр на tt сек, другое - закрыт)'''
 
     # угол открытия крана(стр 446, Идельчик)
@@ -137,8 +148,8 @@ def tap_method(P, V, i, chto_vivodim, char, t_char, d, t_otkr, procent):
         nu = 100
         zet = find_zet(nu)
 
-    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i)
-    Jb = find_Jb(P[-1][i + 2], V[-1][i + 2], d, i)
+    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
+    Jb = find_Jb(P[-1][i + 2], V[-1][i + 2], d, i, v, ro, T)
     VV = (-2 * c * ro + (abs(4 * (ro * c) ** 2 - 2 * zet * ro * (Jb - Ja))) ** 0.5) / (
             zet * ro)
     if (4 * (ro * c) ** 2 - 2 * zet * ro * (Jb - Ja)) < 0:
@@ -147,26 +158,26 @@ def tap_method(P, V, i, chto_vivodim, char, t_char, d, t_otkr, procent):
         VV = VV
     p1 = (Ja - ro * c * VV)
     p2 = (Jb + ro * c * VV)
-    H1 = count_H(p1, i, VV)
-    H2 = count_H(p2, i, VV)
+    H1 = count_H(p1, i, VV, ro)
+    H2 = count_H(p2, i, VV, ro)
     if chto_vivodim == 1:
         return [p1, VV, H1]
     else:
         return [p2, VV, H2]
 
-def right_boundary_method(P, V, i, p_const, d):
+def right_boundary_method(P, V, i, p_const, d, v, ro, T):
 
-    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i)
+    Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
     VV = (Ja - p_const) / (ro * c)
     pp = p_const
-    H = count_H(p_const, i, VV)
+    H = count_H(p_const, i, VV, ro)
     return [pp, VV, H]
 
-def left_boundary_method(P, V, i, p_const, d):
-    Jb = find_Jb(P[-1][i + 1], V[-1][i + 1], d, i)
+def left_boundary_method(P, V, i, p_const, d, v, ro, T):
+    Jb = find_Jb(P[-1][i + 1], V[-1][i + 1], d, i, v, ro, T)
     VV = (p_const - Jb) / (ro * c)
     pp = p_const
-    H = count_H(p_const, i, VV)
+    H = count_H(p_const, i, VV, ro)
     return [pp, VV, H]
 
 if __name__ =='__main__':

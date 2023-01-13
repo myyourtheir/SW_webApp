@@ -42,26 +42,18 @@ def make_x(data, L, N):
 
 def calculate(data):
     p10 = 156960  # 784800   100м
+    p20 = 156960 
+    t = 0
     g = 9.81
     c = 1000
-    o = 0.01
-    p20 = 156960  # 20 м
-    w0 = 3000
-    # Перевод в систему си
-    o = o / 1000
-    t = 0
-    v = 10 * 10**(-6)
+    
+    # не понятно как передать эти параметры в bf
+    
+    v = data['condParams'][0][1] * 10**(-6)
     ro = data['condParams'][0][1]
     t_rab = data['condParams'][0][0]
     
-    with open("Example.txt") as text_z:
-            vis_otm_str = text_z.read().split(',')
-            global vis_otm
-            vis_otm = []
-            for x in vis_otm_str:
-                x = int(x)
-                vis_otm.append(x)
-            text_z.close()
+    
     
     L = count_len_N_numOfElementsInLists(data)[0]
     N = count_len_N_numOfElementsInLists(data)[1]
@@ -78,6 +70,7 @@ def calculate(data):
     Davleniya = [P_O]
     Skorosty = [V_O]
     Napory = [H_O]
+    data['pipeParams'].append([100, 1]) 
     t = 0
     data['pipeline'].append('right_boundary')
     data['pipeline'].insert(0, 'left_boundary')
@@ -94,39 +87,41 @@ def calculate(data):
                  data['pumpParams'][count_pump_iter][0],
                  data['pumpParams'][count_pump_iter][1],
                  data['pumpParams'][count_pump_iter][2],
-                 1, data['pumpParams'][count_pipe_iter][1],
+                 1, data['pipeParams'][count_pipe_iter][1],
                  data['pumpParams'][count_pump_iter][4],
-                 data['pumpParams'][count_pump_iter][3]))
+                 data['pumpParams'][count_pump_iter][3], t, v, ro, T))
                 main.append(bf.pump_method(Davleniya, Skorosty, iter,
                  data['pumpParams'][count_pump_iter][0],
                  data['pumpParams'][count_pump_iter][1],
                  data['pumpParams'][count_pump_iter][2],
-                 2, data['pumpParams'][count_pipe_iter][1],
+                 2, data['pipeParams'][count_pipe_iter][1],
                  data['pumpParams'][count_pump_iter][4],
-                 data['pumpParams'][count_pump_iter][3]))
+                 data['pumpParams'][count_pump_iter][3], t, v, ro, T))
                 count_pump_iter += 1
 
             elif x == 'pipe':
                 for j in range(data['pipeParams'][count_pipe_iter][0]):
-                        main.append(bf.pipe_method(Davleniya, Skorosty, iter, data['pipeParams'][count_pipe_iter][1]))
+                        main.append(bf.pipe_method(Davleniya, Skorosty, iter, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                         iter += 1
                 count_pipe_iter += 1
 
             elif x == 'gateValve':
                     main.append(bf.tap_method(Davleniya, Skorosty, iter, 1, data['gateValveParams'][count_tap_iter][0],
-                            data['gateValveParams'][count_tap_iter][1], data['gateValveParams'][count_pipe_iter][1],
-                            data['gateValveParams'][count_tap_iter][2], data['gateValveParams'][count_tap_iter][3]))
+                            data['gateValveParams'][count_tap_iter][1], data['pipeParams'][count_pipe_iter][1], 
+                            data['gateValveParams'][count_tap_iter][2], data['gateValveParams'][count_tap_iter][3], t, v, ro, T))
+                    main.append(bf.tap_method(Davleniya, Skorosty, iter, 2, data['gateValveParams'][count_tap_iter][0],
+                            data['gateValveParams'][count_tap_iter][1], data['pipeParams'][count_pipe_iter][1], 
+                            data['gateValveParams'][count_tap_iter][2], data['gateValveParams'][count_tap_iter][3], t, v, ro, T))
                     iter += 2
                     count_tap_iter += 1
             
             elif x == 'right_boundary':
-                    main.append(bf.right_boundary_method(Davleniya, Skorosty, iter, p20,
-                                                      data['pipeParams'][count_pipe_iter - 1][1]))
+                    main.append(bf.right_boundary_method(Davleniya, Skorosty, iter, p20, data['pipeParams'][count_pipe_iter - 1][1], v, ro, T))
                     iter += 1
 
             elif x == 'left_boundary':
                     main.append(
-                        bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1]))
+                        bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
         t+=T             
         '''Распаковка main'''     
