@@ -16,6 +16,7 @@ def index():
     if request.method == "POST":
         jsonData = request.get_json()
         print(jsonData)
+        
         return {
             'response' : 'I am the response'
         }
