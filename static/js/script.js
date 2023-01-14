@@ -140,7 +140,7 @@ objBtns[0].onclick = function (){
         }
         else{
             pipeline.push('pipe');
-            pipeParams.push([parseInt(document.getElementById('lengthOfPipe').value), parseInt(document.getElementById('diameterOfPipe').value)])
+            pipeParams.push([parseInt(document.getElementById('lengthOfPipe').value), parseInt(document.getElementById('diameterOfPipe').value)/1000])
 
             
             let svg = document.getElementsByTagName('svg')[0]; 

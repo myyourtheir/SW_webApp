@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
-# from background import calculate
+from background import calculate
 import sys
 
 # print(sys.path)
@@ -16,10 +16,8 @@ def index():
     if request.method == "POST":
         jsonData = request.get_json()
         print(jsonData)
-        
-        return {
-            'response' : 'I am the response'
-        }
+        res = calculate(jsonData)
+        return res
     return render_template('index.html')
 
 

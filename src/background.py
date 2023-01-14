@@ -21,8 +21,8 @@ def make_x(data, L, N):
     x = 0
     xx = []
     count_pipe_iter = 0
-    for i, y in enumerate(data['pipeline']):
-        if y == 'pump' or 'gateValve':
+    for y in data['pipeline']:
+        if y == 'pump' or y == 'gateValve':
             xx.extend([x, x])
             x += dx
         elif y == 'pipe':
@@ -30,7 +30,7 @@ def make_x(data, L, N):
                 xx.append(x)
                 x += dx
             count_pipe_iter += 1
-        elif y == 'right_boundary' or 'left_boundary':
+        elif y == 'right_boundary' or y == 'left_boundary':
             xx.append(x)
             x += dx
     return xx
@@ -136,9 +136,9 @@ def calculate(data):
         Skorosty.append(V_moment)
         Napory.append(H_moment)
         
-    x = make_x(data, L, N) 
+    xx = make_x(data, L, N) 
     res = {
-        'x': x,
+        'x': xx,
         'Davleniya': Davleniya,
         'Skorosty' : Skorosty,
         "Napory": Napory
@@ -155,7 +155,7 @@ def calculate(data):
 if __name__ =='__main__':
     js = {'condParams': [[10, 850, 10]],
      'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
-     'pipeParams': [[100, 1000], [100, 1000], [10, 1000], [100, 1000]],
+     'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
      'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
      'gateValveParams': [[1, 100, 100, 100]]}
     print(calculate(js))
