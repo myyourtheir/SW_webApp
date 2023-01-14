@@ -123,8 +123,8 @@ objBtns[0].onclick = function (){
     function setNonePipe(){
         pipeForm = document.getElementById('pipeForm');
         pipeForm.style.display = 'none';
-        document.getElementById('lengthOfPipe').value = '';
-        document.getElementById('diameterOfPipe').value = '';
+        document.getElementById('lengthOfPipe').value = '100';
+        document.getElementById('diameterOfPipe').value = '1000';
     }
 
     pipeForm = document.getElementById('pipeForm');
@@ -189,10 +189,10 @@ objBtns[1].onclick = function (){
     function setNonePump(){
         pumpForm = document.getElementById('pumpForm');
         pumpForm.style.display = 'none';
-        document.getElementById('aOfPump').value = '';
-        document.getElementById('bOfPump').value = '';
-        document.getElementById('timePump').value = '';
-        document.getElementById('Run-outTimeOfPump').value = '';
+        document.getElementById('aOfPump').value = '310';
+        document.getElementById('bOfPump').value = '0.0000008';
+        document.getElementById('timePump').value = '0';
+        document.getElementById('Run-outTimeOfPump').value = '20';
     }
 
     pumpForm = document.getElementById('pumpForm');
@@ -262,9 +262,9 @@ objBtns[2].onclick = function (){
     function setNoneGateValve(){
         gateValveForm = document.getElementById('gateValveForm');
         gateValveForm.style.display = 'none';
-        document.getElementById('timeGateValve').value ='';
-        document.getElementById('Run-outTimeOfGateValve').value ='';
-        document.getElementById('percentGateValve').value ='';
+        document.getElementById('timeGateValve').value ='100';
+        document.getElementById('Run-outTimeOfGateValve').value ='100';
+        document.getElementById('percentGateValve').value ='100';
     }
     
     gateValveForm = document.getElementById('gateValveForm');

@@ -79,10 +79,10 @@
             <span id="closeFavPipe" class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
             
             <label class="textFieldLabel">Длина:</label> 
-            <span style="font-family: inherit; display: inline; "><input id="lengthOfPipe" class="textFieldInput" type="number" value="required"> км </span>
+            <span style="font-family: inherit; display: inline; "><input id="lengthOfPipe" class="textFieldInput" type="number" value="100"> км </span>
             
             <label class="textFieldLabel">Диаметр:</label>
-            <span><input id="diameterOfPipe" class="textFieldInput" type="number" value="required"> мм</span>
+            <span><input id="diameterOfPipe" class="textFieldInput" type="number" value="1000"> мм</span>
             
             <input id="pipeFormBtn" class ="textFieldButton" type="submit" value="Добавить">
         </div>
@@ -94,21 +94,21 @@
             <span id="closeFavPump"  class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
 
             <label class="textFieldLabel">Коэфициент аппроксимации а:</label> 
-            <input id="aOfPump" class="textFieldInput" type="number" value="required">
+            <input id="aOfPump" class="textFieldInput" type="number" value="310">
 
             <label class="textFieldLabel">Коэфициент аппроксимации b:</label>
-            <input id="bOfPump" class="textFieldInput" type="number" value="required">
+            <input id="bOfPump" class="textFieldInput" type="number" value="0.0000008">
 
             <select name="pumpSelect" id="pumpSelect" class="objSelect">
                 <option value="1">Включается на</option>
                 <option value="2">Выключается на</option>
             </select>
 
-            <span style="font-family: inherit; display: inline;"> <input id="timePump" class="textFieldInputTime" type="number" value="required" > 
+            <span style="font-family: inherit; display: inline;"> <input id="timePump" class="textFieldInputTime" type="number" value="0" > 
                 сек</span>
 
             <label class="textFieldLabel">Время выбега:</label>
-            <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfPump" class="textFieldInputTime" type="number" value="required" > 
+            <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfPump" class="textFieldInputTime" type="number" value="20" > 
                 сек</span>
             <input id="pumpFormBtn" class ="textFieldButton" type="submit" value="Добавить">
         </div>
@@ -124,15 +124,15 @@
                 <option value="1">Открывается на</option>
                 <option value="2">Закрывается на</option>
             </select>
-            <span style="font-family: inherit; display: inline;"> <input id="timeGateValve" class="textFieldInputTime" type="number" value="required" > 
+            <span style="font-family: inherit; display: inline;"> <input id="timeGateValve" class="textFieldInputTime" type="number" value="100" > 
                 сек</span>
 
             <label class="textFieldLabel">Время открытия/закрытия:</label>
-            <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfGateValve" class="textFieldInputTime" type="number" value="required" > 
+            <span style="font-family: inherit; display: inline; "> <input id="Run-outTimeOfGateValve" class="textFieldInputTime" type="number" value="100" > 
                 сек</span>
 
             <label class="textFieldLabel">Процент открытия/закрытия:</label>
-            <input id="percentGateValve" class="textFieldInput" type="number" value="required">
+            <input id="percentGateValve" class="textFieldInput" type="number" value="100">
 
             <input id="gateValveFormBtn" class ="textFieldButton" type="submit" value="Добавить">
         </div>

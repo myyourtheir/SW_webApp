@@ -4,7 +4,7 @@ o = 0.01/ 1000
 w0 = 3000
 g = 9.81
 c = 1000
-with open("Example.txt") as text_z:
+with open("src/Example.txt", 'r') as text_z:
             vis_otm_str = text_z.read().split(',')
             global vis_otm
             vis_otm = []

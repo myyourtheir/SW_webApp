@@ -47,7 +47,7 @@ def calculate(data):
     g = 9.81
     c = 1000
     
-    # не понятно как передать эти параметры в bf
+    
     
     v = data['condParams'][0][1] * 10**(-6)
     ro = data['condParams'][0][1]
@@ -153,11 +153,11 @@ def calculate(data):
 
 
 if __name__ =='__main__':
-    js = {'condParams': [[1000, 850, 10]],
-            'pipeline': ['pipe', 'pump'], 
-            'pipeParams': [[1, 1]], 
-            'pumpParams': [[1, 1, 1, 1, 1]], 
-            'gateValveParams': []}
+    js = {'condParams': [[10, 850, 10]],
+     'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
+     'pipeParams': [[100, 1000], [100, 1000], [10, 1000], [100, 1000]],
+     'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
+     'gateValveParams': [[1, 100, 100, 100]]}
     print(calculate(js))
 
     
