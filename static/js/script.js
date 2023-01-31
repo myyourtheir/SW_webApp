@@ -36,6 +36,7 @@ resFav.onclick = function(){
                 response.json()
                 .then(function(response) {
                     console.log(response);
+                    drawChart(response)
                 });
             }
             else {
@@ -51,9 +52,10 @@ resFav.onclick = function(){
         condLbl.innerHTML = 'Добавьте элементы в трубопровод'
     }
 }
-// 
+// график
+function drawChart(data) {
 
-
+}
 // Выдвижение меню
 let menuBtn = document.querySelector('.sideMenuBtn')
 let listBtns = document.querySelectorAll('li span')

@@ -76,13 +76,13 @@ def calculate(data):
     data['pipeline'].insert(0, 'left_boundary')
     while t <= t_rab:
         count_pump_iter = 0
-        iter = 0
-        main = []
         count_pipe_iter = 0
         count_tap_iter = 0
-        for x in data['pipeline']:
+        iter = 0
+        main = []
+        for y in data['pipeline']:
             
-            if x == 'pump':
+            if y == 'pump':
                 main.append(bf.pump_method(Davleniya, Skorosty, iter,
                  data['pumpParams'][count_pump_iter][0],
                  data['pumpParams'][count_pump_iter][1],
@@ -99,13 +99,13 @@ def calculate(data):
                  data['pumpParams'][count_pump_iter][3], t, v, ro, T))
                 count_pump_iter += 1
 
-            elif x == 'pipe':
+            elif y == 'pipe':
                 for j in range(data['pipeParams'][count_pipe_iter][0]):
                         main.append(bf.pipe_method(Davleniya, Skorosty, iter, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                         iter += 1
                 count_pipe_iter += 1
 
-            elif x == 'gateValve':
+            elif y == 'gateValve':
                     main.append(bf.tap_method(Davleniya, Skorosty, iter, 1, data['gateValveParams'][count_tap_iter][0],
                             data['gateValveParams'][count_tap_iter][1], data['pipeParams'][count_pipe_iter][1], 
                             data['gateValveParams'][count_tap_iter][2], data['gateValveParams'][count_tap_iter][3], t, v, ro, T))
@@ -115,16 +115,17 @@ def calculate(data):
                     iter += 2
                     count_tap_iter += 1
             
-            elif x == 'right_boundary':
+            elif y == 'right_boundary':
                     main.append(bf.right_boundary_method(Davleniya, Skorosty, iter, p20, data['pipeParams'][count_pipe_iter - 1][1], v, ro, T))
                     iter += 1
 
-            elif x == 'left_boundary':
+            elif y == 'left_boundary':
                     main.append(
                         bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
         t+=T             
-        '''Распаковка main'''     
+        '''Распаковка main'''  
+   
         p_moment = []
         V_moment = []
         H_moment = []
@@ -153,7 +154,7 @@ def calculate(data):
 
 
 if __name__ =='__main__':
-    js = {'condParams': [[10, 850, 10]],
+    js = {'condParams': [[100, 850, 10]],
      'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
      'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
      'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
