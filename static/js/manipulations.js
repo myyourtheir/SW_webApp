@@ -54,44 +54,7 @@ resFav.onclick = function(){
     }
 }
 // график
-function drawChart(res) {
-    var height = 500, 
-    width = x, 
-    margin= 30;
 
-    var svg = d3.select("#mainSVG")
-        .append("svg")
-        .attr("class", "axis")
-        .attr("width", width + 100)
-        .attr("height", height + 150);
-
-    var xAxisLength = width- 100;
-    var yAxisLength = height - 2 * margin;
-
-    var scaleX = d3.scaleLinear()
-                    .domain([0, x - 100])
-                    .range([0, xAxisLength]);
-
-    var scaleY = d3.scaleLinear()
-                    .domain([100, 0])
-                    .range([0, yAxisLength]);
-
-    var xAxis = d3.axisBottom(scaleX);
-
-    var yAxis = d3.axisLeft(scaleY);
-
-    svg.append("g")       
-        .attr("class", "x-axis")
-        .attr("transform",  // сдвиг оси вниз и вправо
-            "translate(" +  100 + "," + (height + 150 - margin)+ ")")
-        .call(xAxis);
-
-    svg.append("g")       
-        .attr("class", "y-axis")
-        .attr("transform", // сдвиг оси вниз и вправо на margin
-                "translate(" + 100 + "," + (margin + 150) + ")")
-        .call(yAxis);
-}
 
 // Выдвижение меню
 let menuBtn = document.querySelector('.sideMenuBtn')
