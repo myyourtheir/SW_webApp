@@ -49,7 +49,7 @@ def calculate(data):
     
     
     
-    v = data['condParams'][0][1] * 10**(-6)
+    v = data['condParams'][0][2] * 10**(-6)
     ro = data['condParams'][0][1]
     t_rab = data['condParams'][0][0]
     
@@ -154,11 +154,16 @@ def calculate(data):
 
 
 if __name__ =='__main__':
-    js = {'condParams': [[100, 850, 10]],
+    js = {'condParams': [[500, 850, 10]],
      'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
      'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
      'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
      'gateValveParams': [[1, 100, 100, 100]]}
+    # js = {'condParams': [[100, 850, 10]],
+    #  'pipeline': ['pipe'],
+    #  'pipeParams': [[100, 1]],
+    #  'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
+    #  'gateValveParams': [[1, 100, 100, 100]]}
     print(calculate(js))
 
     

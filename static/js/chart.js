@@ -1,9 +1,9 @@
 function drawChart(res) {
-    var height = 300, 
+    var height = 500, 
     width = x, 
     margin= 30;
     
-    rawData = d3.zip(res.x, res.Davleniya[300]).map(function(d) {
+    rawData = d3.zip(res.x, res.Napory[300]).map(function(d) {
         yyy = d[1];
         xxx= d[0];
         return {x: xxx, y: yyy};
