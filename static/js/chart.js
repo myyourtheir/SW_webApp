@@ -1,9 +1,10 @@
-function drawChart(res, par) {
+function drawChart(res) {
     var height = 300, 
     width = x, 
     margin= 30;
     
-    rawData = d3.zip(res.x, res.Davleniya[800]).map(function(d) {
+    
+    rawData = d3.zip(res.x, res.Napory[800]).map(function(d) {
         yyy = d[1];
         xxx= d[0];
         return {x: xxx, y: yyy};
@@ -26,7 +27,7 @@ function drawChart(res, par) {
                     .range([0, xAxisLength]);
 
     var scaleY = d3.scaleLinear()
-                    .domain([6000000, -2000000])
+                    .domain([600, -200])
                     .range([0, yAxisLength]);
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
@@ -64,6 +65,24 @@ function drawChart(res, par) {
      svg.append("g").append("path")
                 .attr("d", line(data))
                 .style("stroke", "black")
-                .style("stroke-width", 1);
+                .style("stroke-width", 1)
+                .attr("class", "line");
     
 }
+
+function update (data){
+    var t = d3.transition()
+      .duration(500)
+      .ease(d3.easeLinear);
+  
+    // Update the path
+    d3
+      .select(".line")
+      .transition(t)
+      .attr("d", line(data))
+}
+
+// function make_data(data){
+
+
+// }
