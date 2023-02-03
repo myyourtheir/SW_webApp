@@ -98,6 +98,7 @@ def calculate(data):
                  data['pumpParams'][count_pump_iter][4],
                  data['pumpParams'][count_pump_iter][3], t, v, ro, T))
                 count_pump_iter += 1
+                iter += 2
 
             elif y == 'pipe':
                 for j in range(data['pipeParams'][count_pipe_iter][0]):
@@ -154,16 +155,16 @@ def calculate(data):
 
 
 if __name__ =='__main__':
-    js = {'condParams': [[500, 850, 10]],
-     'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
-     'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
-     'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
-     'gateValveParams': [[1, 100, 100, 100]]}
-    # js = {'condParams': [[100, 850, 10]],
-    #  'pipeline': ['pipe'],
-    #  'pipeParams': [[100, 1]],
+    # js = {'condParams': [[500, 850, 10]],
+    #  'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
+    #  'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
     #  'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
     #  'gateValveParams': [[1, 100, 100, 100]]}
+    js = {'condParams': [[300, 850, 10]],
+     'pipeline': ['pump', 'pipe'],
+     'pipeParams': [[100, 1]],
+     'pumpParams': [[310, 8e-07, 1, 0, 20]],
+     'gateValveParams': []}
     print(calculate(js))
 
     

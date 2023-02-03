@@ -1,9 +1,9 @@
-function drawChart(res) {
-    var height = 500, 
+function drawChart(res, par) {
+    var height = 300, 
     width = x, 
     margin= 30;
     
-    rawData = d3.zip(res.x, res.Napory[300]).map(function(d) {
+    rawData = d3.zip(res.x, res.Davleniya[800]).map(function(d) {
         yyy = d[1];
         xxx= d[0];
         return {x: xxx, y: yyy};
@@ -26,7 +26,7 @@ function drawChart(res) {
                     .range([0, xAxisLength]);
 
     var scaleY = d3.scaleLinear()
-                    .domain([d3.max(res.Davleniya[300]), d3.min(res.Davleniya[300])])
+                    .domain([6000000, -2000000])
                     .range([0, yAxisLength]);
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
