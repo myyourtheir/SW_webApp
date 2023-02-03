@@ -2,16 +2,8 @@ function drawChart(res) {
     var height = 300, 
     width = x, 
     margin= 30;
-    
-    
-    rawData = d3.zip(res.x, res.Napory[800]).map(function(d) {
-        yyy = d[1];
-        xxx= d[0];
-        return {x: xxx, y: yyy};
-    });
 
-   
-
+    
 
     var svg = d3.select("#mainSVG")
         .append("svg")
@@ -51,38 +43,39 @@ function drawChart(res) {
         .attr("transform", // сдвиг оси вниз и вправо на margin
                 "translate(" + 100 + "," + (margin + 150) + ")")
         .call(yAxis);
+    for (let j =0; j<res.Napory.length; j++){
+        rawData = d3.zip(res.x, res.Napory[j]).map(function(d) {
+            yyy = d[1];
+            xxx= d[0];
+            return {x: xxx, y: yyy};
+        });
+        let data = [];
+        for(i=0; i<rawData.length; i++){
+                    data.push({x: scaleX(rawData[i].x)+100, y: scaleY(rawData[i].y) +margin + 150});
+        };
+        setInterval(() => { update(data); }, 0); 
+        
+    }
     
-    var line = d3.line()
-        .x(function(d) { return d.x;})
-        .y(function(d) { return d.y;});
+    function update (data){
+            
+        var u = svg.selectAll(".lineTest")
+            .data([data], function(d){ return d.x});
 
-    let data = [];
-    for(i=0; i<rawData.length; i++){
-              data.push({x: scaleX(rawData[i].x)+100, y: scaleY(rawData[i].y) +margin + 150});
-    };
-     console.log(rawData)
-     console.log(data)
-     svg.append("g").append("path")
-                .attr("d", line(data))
-                .style("stroke", "black")
-                .style("stroke-width", 1)
-                .attr("class", "line");
-    
-}
-
-function update (data){
-    var t = d3.transition()
-      .duration(500)
-      .ease(d3.easeLinear);
-  
-    // Update the path
-    d3
-      .select(".line")
-      .transition(t)
-      .attr("d", line(data))
-}
-
-// function make_data(data){
+        u
+        .enter()
+        .append("path")
+        .attr("class","lineTest")
+        .merge(u)
+        .transition()
+        .duration(0)
+        .attr("d", d3.line()
+            .x(function(d) { return d.x;})
+            .y(function(d) { return d.y;}))
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-width", 2)
+        }
+    }
 
 
-// }
