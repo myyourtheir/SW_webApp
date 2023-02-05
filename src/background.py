@@ -70,8 +70,10 @@ def calculate(data):
     Davleniya = [P_O]
     Skorosty = [V_O]
     Napory = [H_O]
+    
     data['pipeParams'].append([100, 1]) 
     t = 0
+    times = []
     data['pipeline'].append('right_boundary')
     data['pipeline'].insert(0, 'left_boundary')
     while t <= t_rab:
@@ -124,6 +126,7 @@ def calculate(data):
                     main.append(
                         bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
+        times.append(t)
         t+=T             
         '''Распаковка main'''  
    
@@ -143,7 +146,8 @@ def calculate(data):
         'x': xx,
         'Davleniya': Davleniya,
         'Skorosty' : Skorosty,
-        "Napory": Napory
+        "Napory": Napory,
+        'dt': T
     }
     
 
@@ -155,16 +159,16 @@ def calculate(data):
 
 
 if __name__ =='__main__':
-    # js = {'condParams': [[500, 850, 10]],
-    #  'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
-    #  'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
-    #  'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
-    #  'gateValveParams': [[1, 100, 100, 100]]}
-    js = {'condParams': [[300, 850, 10]],
-     'pipeline': ['pump', 'pipe'],
-     'pipeParams': [[100, 1]],
-     'pumpParams': [[310, 8e-07, 1, 0, 20]],
-     'gateValveParams': []}
+    js = {'condParams': [[500, 850, 10]],
+     'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
+     'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
+     'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
+     'gateValveParams': [[1, 100, 100, 100]]}
+    # js = {'condParams': [[300, 850, 10]],
+    #  'pipeline': ['pump', 'pipe'],
+    #  'pipeParams': [[100, 1]],
+    #  'pumpParams': [[310, 8e-07, 1, 0, 20]],
+    #  'gateValveParams': []}
     print(calculate(js))
 
     

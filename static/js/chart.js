@@ -2,20 +2,24 @@ const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };  
 
+
 const drawChart = async(res, resY, max, min, marginY, par) => {
     let markerY = NaN;
     let colorOfLine =NaN;
+    let t = 0;
+    let dt = res.dt;
     if (par==='H'){
-        markerY = 'H, м'
-        colorOfLine = 'red'
+        markerY = 'H, м';
+        colorOfLine = 'red';
+        
     };
     if (par==='S'){
-        markerY = 'V, м/c'
-        colorOfLine = 'steelblue'
+        markerY = 'V, м/c';
+        colorOfLine = 'steelblue';
     };
     if (par==='P'){
-        markerY = 'p, Па'
-        colorOfLine = 'green'
+        markerY = 'p, Па';
+        colorOfLine = 'green';
     };
 
     var height = 250, 
@@ -61,7 +65,7 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
         .attr("y", 5)
         .attr("text-anchor", "end")
         .style("font-size", "14px")
-        .style('fill', 'green')
+        .style('fill', 'black')
         .text('x, м');
         
 
@@ -75,27 +79,38 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
         .attr("y", margin - 40)
         .attr("text-anchor", "end")
         .style("font-size", "14px")
-        .style('fill', 'green')
+        .style('fill', 'black')
         .text(markerY);
-    
-    
+    if (par ==="H"){
+        svg.append("text")
+            .attr('class', 'labelTime')
+            .attr("x", width)
+            .attr("y", marginY + margin)
+            .attr("text-anchor", "end")
+            .style("font-size", "14px")
+            .style('fill', 'black')
+            .text(t);
+    }
     for (let j =0; j<res.Napory.length; j++){
 
         let dataMoment = []
         for(i=0; i<res.x.length; i++){
                     dataMoment.push({x: scaleX(res.x[i])+100, y: scaleY(resY[j][i]) +margin + marginY});
         };
-        update(dataMoment, colorOfLine)
+        updateLine(dataMoment, colorOfLine)
+            timeLabel = d3.select('.labelTime')
+                        .text('t = ' + t.toFixed(2)+ 'c')
+            t+=dt
         await sleep(50)
     };
     
-        
-         
+    
+
         
 
     
     
-    function update (data, colorOfLine){
+    function updateLine (data, colorOfLine){
           
         var u = svg.selectAll(".lineTest")
             .data([data], function(d){ return {x :d.x, y: d.y}});
