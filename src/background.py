@@ -61,7 +61,7 @@ def calculate(data):
     
     T = L / (N * c)
 
-    P_O = [20 * 10 ** 5] * num_of_elements_in_lists
+    P_O = [156960] * num_of_elements_in_lists
     V_O = [0.1] * num_of_elements_in_lists
     H_O = []
     for i in P_O:
