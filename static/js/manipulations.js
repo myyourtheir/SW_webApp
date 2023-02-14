@@ -58,7 +58,7 @@ setTransform();
 
 
 // Отправка запроса на сервер для расчета и получение ответа
-resFav = document.querySelector('.resultFav');
+resFav = document.getElementById('startResumeBtn');
 resFav.onclick = function(){
     if (pipeline.includes('pipe')){
         req = {"condParams": condParams,
@@ -79,8 +79,6 @@ resFav.onclick = function(){
             if(response.ok) {
                 response.json()
                 .then(function(response) {
-                    res = response
-                    console.log(res);
                     drawChart(response, response.Napory, 600, -200, 150, 'H');
                     drawChart(response, response.Davleniya, 6000000, -2000000, -10, 'P')
                     drawChart(response, response.Skorosty, 3, -3, -10, 'S');
@@ -99,8 +97,6 @@ resFav.onclick = function(){
         condLbl.innerHTML = 'Добавьте элементы в трубопровод'
     }
 }
-// график
-
 
 // Выдвижение меню
 let menuBtn = document.querySelector('.sideMenuBtn')

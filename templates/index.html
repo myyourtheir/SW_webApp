@@ -18,8 +18,10 @@
                 <a href="#" class="toolbarItem" id="toolBarInnerConditions">Параметры среды</a>
             </div>  
             <span id="conditionLbl"></span>
-            <span  class="resultFav"> <img src="{{url_for('static', filename = 'images/resultFav.svg')}}" alt="Расчитать" height="50px" width="50px"> </span>
-            
+            <div class="manipulatingButtons">
+                <a href="#"><span class="topMenuBtns"  id="pauseBtn"> <img src="{{url_for('static', filename = 'images/pauseBtn.svg')}}" alt="Пауза" height="40px" width="40px"> </span></a>
+                <a href="#"><span  class="topMenuBtns" id="startResumeBtn"> <img src="{{url_for('static', filename = 'images/startBtn.svg')}}" alt="Расчитать" height="40px" width="40px"> </span></a>
+            </div>
         </div>  
     </div>
 
