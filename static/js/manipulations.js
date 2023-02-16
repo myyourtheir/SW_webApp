@@ -67,6 +67,10 @@ resumeBtn.onclick = function animResume(){
 };
 
 
+let topMenuBtns1 = document.getElementById('manipulatingButtons1')
+let topMenuBtns2 = document.getElementById('manipulatingButtons2');
+let startBtnOuter = document.getElementById('startBtnOuter')
+
 // Отправка запроса на сервер для расчета и получение ответа
 startBtn = document.getElementById('startBtn');
 startBtn.onclick = function(){
@@ -87,7 +91,9 @@ startBtn.onclick = function(){
         .then(function (response){
 
             if(response.ok) {
-                
+                topMenuBtns1.style.display  ="none";
+                topMenuBtns2.style.display  ="inline";
+                startBtnOuter.style.display = 'none';
                 response.json()
                 .then(function(response) {                    
                     drawChart(response, response.Napory, 600, -200, 150, 'H');

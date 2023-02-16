@@ -18,9 +18,23 @@
                 <a href="#" class="toolbarItem" id="toolBarInnerConditions">Параметры среды</a>
             </div>  
             <span id="conditionLbl"></span>
-            <div class="manipulatingButtons">
-                <a href="#"><span class="topMenuBtns"  id="pauseBtn"> <img src="{{url_for('static', filename = 'images/pauseBtn.svg')}}" alt="Пауза" height="40px" width="40px"> </span></a>
-                <a href="#"><span  class="topMenuBtns" id="resumeBtn"> <img src="{{url_for('static', filename = 'images/startBtn.svg')}}" alt="Расчитать" height="40px" width="40px"> </span></a>
+            <div id = "manipulatingButtons2">
+                <div  class="topMenuBtns2"  id="pauseBtn">
+                    <a href="#"><img src="{{url_for('static', filename = 'images/pauseBtn.svg')}}" alt="Пауза" height="40px" width="40px"></a>
+                </div>
+                
+                <div class="topMenuBtns2" id="resumeBtn" >
+                    <a href="#"><img src="{{url_for('static', filename = 'images/startBtn.svg')}}" alt="Расчитать" height="40px" width="40px"> </a>
+                </div>
+            </div>
+            <div id = "manipulatingButtons1">
+                <div  class="topMenuBtns1"  id="delBtn">
+                    <a href="#"><img src="{{url_for('static', filename = 'images/delBtn.svg')}}" alt="Удалить" height="35px" width="35px"></a>
+                </div>
+                
+                <div class="topMenuBtns1" id="resetBtn" >
+                    <a href="#"><img src="{{url_for('static', filename = 'images/resetBtn.svg')}}" alt="Сбросить" height="35px" width="35px"> </a>
+                </div>
             </div>
             <div id="startBtnOuter">
                 <span><a href="#" id = "startBtn">Рассчитать</a></span>

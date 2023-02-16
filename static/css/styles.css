@@ -285,15 +285,45 @@ display: none;
   height: 25px;
   width: 500px;
 }
+.topMenuBtns2{
+  display: inline;
+  height: 40px;
+  width: 40px;
+}
 
-.manipulatingButtons{
+.topMenuBtns2 img:hover{
+  transform: scale(1.05);
+  transition: 0.1s;
+}
+.topMenuBtns1{
+  display: inline;
+  height: 40px;
+  width: 40px;
+  padding-left: 5px;
+}
+
+.topMenuBtns1 img:hover{
+  transform: scale(1.05);
+  transition: 0.1s;
+}
+#manipulatingButtons2{
+  position: absolute;
+  display: none;
+  margin-left: 40%;
+  margin-top: 55px;
+  height: 40px;
+  align-items: center;
+}
+#manipulatingButtons1{
   position: absolute;
   display: inline;
   margin-left: 40%;
   margin-top: 55px;
   height: 40px;
   align-items: center;
+  justify-content: space-between;
 }
+
 
 #startBtnOuter{
   display: inline;
@@ -322,7 +352,7 @@ display: none;
 
 }
 
-span.circleImage{
+.circleImage{
   display: inline-flex;
   border-radius: 50%;
   overflow: hidden;
