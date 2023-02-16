@@ -292,11 +292,34 @@ display: none;
   margin-left: 40%;
   margin-top: 55px;
   height: 40px;
+  align-items: center;
 }
 
-.resultFav:hover{
-  transition: 0.1s;
+#startBtnOuter{
+  display: inline;
+  position: absolute;
+  margin-left: 85%;
+  align-items: center;
+  margin-top: 45px;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  
+  
+}
+#startBtn{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+
+}
+
+#startBtnOuter:hover{
   transform: scale(1.05);
+  transition: 0.12s;
+  box-shadow: 0px 0px 4px 5px rgba(1, 6, 9, 0.2);
+
 }
 
 span.circleImage{

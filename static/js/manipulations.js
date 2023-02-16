@@ -54,12 +54,22 @@ pointX = e.clientX - xs * scale;
 pointY = e.clientY - ys * scale;
 setTransform();
 }
-
+// стоп анимации
+let anim = true;
+let pauseBtn = document.getElementById('pauseBtn');
+pauseBtn.onclick = function animStop(){
+    anim = false
+};
+//продолжить анимацию
+let resumeBtn = document.getElementById('resumeBtn');
+resumeBtn.onclick = function animResume(){
+    anim = true;
+};
 
 
 // Отправка запроса на сервер для расчета и получение ответа
-resFav = document.getElementById('startResumeBtn');
-resFav.onclick = function(){
+startBtn = document.getElementById('startBtn');
+startBtn.onclick = function(){
     if (pipeline.includes('pipe')){
         req = {"condParams": condParams,
             "pipeline": pipeline,
@@ -77,12 +87,14 @@ resFav.onclick = function(){
         .then(function (response){
 
             if(response.ok) {
+                
                 response.json()
-                .then(function(response) {
+                .then(function(response) {                    
                     drawChart(response, response.Napory, 600, -200, 150, 'H');
                     drawChart(response, response.Davleniya, 6000000, -2000000, -10, 'P')
                     drawChart(response, response.Skorosty, 3, -3, -10, 'S');
                 });
+                
             }
             else {
                 throw Error('Something went wrong');

@@ -91,17 +91,29 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
             .style('fill', 'black')
             .text(t);
     }
-    for (let j =0; j<res.Napory.length; j++){
+    let fullData = [];
+    for (let j = 0; j < res.Napory.length; j++){
 
         let dataMoment = []
         for(i=0; i<res.x.length; i++){
                     dataMoment.push({x: scaleX(res.x[i])+100, y: scaleY(resY[j][i]) +margin + marginY});
         };
-        updateLine(dataMoment, colorOfLine)
-            timeLabel = d3.select('.labelTime')
-                        .text('t = ' + t.toFixed(2)+ 'c')
-            t+=dt
+        fullData.push(dataMoment)
+    };
+
+    for(let iter = 0; iter<= fullData.length;){
+
+        if (!anim) {
+            await sleep(1)
+        }
+        else{
+            updateLine(fullData[iter], colorOfLine)
+                timeLabel = d3.select('.labelTime')
+                            .text('t = ' + t.toFixed(2)+ 'c')
+                t+=dt
+        iter+=1;
         await sleep(50)
+        }
     };
     
     
