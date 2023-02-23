@@ -1,4 +1,7 @@
-
+d3.selection.prototype.last = function() {
+    var last = this.size() - 1;
+    return d3.select(this[0][last]);
+  };
 
 function setColorForLables(color){
     warringtext = document.querySelectorAll('.textFieldLabel');
@@ -54,6 +57,50 @@ pointX = e.clientX - xs * scale;
 pointY = e.clientY - ys * scale;
 setTransform();
 }
+
+// Удалить последний элемент 
+function delLastElem(arr){
+    return arr.slice(0, arr.length-1)
+};
+
+delBtn = document.getElementById('delBtn');
+delBtn.onclick = function(){
+    let lastElem = pipeline.pop();
+    
+    if (lastElem === 'pipe'){
+        pipeParams.pop();
+        d3.selectAll('.pipe:last-of-type').remove();
+        x = x-100;
+
+    } else if (lastElem === 'pump'){
+        pumpParams.pop();
+        d3.selectAll('.pump:last-of-type').remove();
+
+    } else if (lastElem === 'gateValve'){
+        gateValveParams.pop();
+        d3.selectAll('.gateValve:last-of-type').remove();
+        x=x-40
+    } else if( lastElem ==='safetyGate'){
+        d3.selectAll('.safetyGate:last-of-type').remove();
+        x=x-40;
+    }
+};
+
+// Полное обновление SVG
+resetBtn = document.getElementById('resetBtn');
+resetBtn.onclick = function(){
+    let mainSVG =  d3.select("#mainSVG");
+    mainSVG.selectAll("*").remove();
+    condParams =[[1000, 850, 10]];
+    pipeline = [];
+    pipeParams = [];
+    pumpParams =[];
+    gateValveParams =[];
+    y = '150';
+    x = '100';
+}
+
+
 // стоп анимации
 let anim = true;
 let pauseBtn = document.getElementById('pauseBtn');
