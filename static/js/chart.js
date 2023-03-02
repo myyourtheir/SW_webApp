@@ -22,7 +22,7 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
         colorOfLine = 'green';
     };
 
-    var height = 250, 
+    var height = 300, 
     width = x, 
     margin= 30;
 
