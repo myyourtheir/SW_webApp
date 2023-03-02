@@ -9,7 +9,7 @@ function setColorForLables(color){
             warringtext[i].style.color = color;
             } 
 }
-let condParams =[[1000, 850, 10]];
+let condParams =[[100, 850, 10]];
 let pipeline = [];
 let pipeParams = [];
 let pumpParams =[];
@@ -19,7 +19,7 @@ let gateValveParams =[];
 var scale = 1,
         panning = false,
         pointX = 0,
-        pointY = 0,s
+        pointY = 0,
         start = { x: 0, y: 0 },
         zoom = document.querySelector(".workSpace");
 function setTransform() {
@@ -91,7 +91,7 @@ resetBtn = document.getElementById('resetBtn');
 resetBtn.onclick = function(){
     let mainSVG =  d3.select("#mainSVG");
     mainSVG.selectAll("*").remove();
-    condParams =[[1000, 850, 10]];
+    condParams =[[100, 850, 10]];
     pipeline = [];
     pipeParams = [];
     pumpParams =[];
@@ -191,7 +191,7 @@ toolBarInnerCondBtn.onclick = function(){
 function setNoneConv(){
     let envCond = document.getElementById('envCond');
         envCond.style.display = 'none';
-        document.getElementById('timeToIter').value = '1000';
+        document.getElementById('timeToIter').value = '100';
         document.getElementById('density').value = '850';
         document.getElementById('viscosity').value = '10';
 }

@@ -1,14 +1,14 @@
 from flask import Flask, render_template, request
-from flask_cors import CORS
+
 from background import calculate
-import sys
+
 import json
 # print(sys.path)
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-CORS(app)
+
 
 @app.route('/', methods=["GET", "POST"])
 @app.route('/index', methods=["GET", "POST"])
@@ -23,4 +23,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
