@@ -3,7 +3,7 @@ const sleep = (ms) => {
   };  
 
 
-const drawChart = async(res, resY, max, min, marginY, par) => {
+const drawChart = async(res, resY, marginY, par) => {
     let markerY = NaN;
     let colorOfLine =NaN;
     let t = 0;
@@ -11,15 +11,21 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
     if (par==='H'){
         markerY = 'H, м';
         colorOfLine = 'red';
+        minVal = res.min_val[0] - 50;
+        maxVal = res.max_val[0] + 50;
         
     };
     if (par==='S'){
         markerY = 'V, м/c';
         colorOfLine = 'steelblue';
+        minVal = res.min_val[2] - 1;
+        maxVal = res.max_val[2] + 1;
     };
     if (par==='P'){
         markerY = 'p, Па';
         colorOfLine = 'green';
+        minVal = res.min_val[1] - 1000000;
+        maxVal = res.max_val[1] + 1000000;
     };
 
     var height = 300, 
@@ -42,7 +48,7 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
                     .range([0, xAxisLength]);
 
     var scaleY = d3.scaleLinear()
-                    .domain([max, min])
+                    .domain([maxVal, minVal])
                     .range([0, yAxisLength]);
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
@@ -101,7 +107,7 @@ const drawChart = async(res, resY, max, min, marginY, par) => {
         fullData.push(dataMoment)
     };
 
-    for(let iter = 0; iter<= fullData.length;){
+    for(let iter = 0; iter<= fullData.length-1;){
 
         if (!anim) {
             await sleep(1)

@@ -2,6 +2,7 @@
 # Нужно обратить внимание в продакшене на путь импорта этого модуля
 import basic_functions as bf
 import json
+import numpy as np
 
 def count_len_N_numOfElementsInLists(data): #передаем json считает длину трубы
     L=0
@@ -147,7 +148,9 @@ def calculate(data):
         'Davleniya': Davleniya,
         'Skorosty' : Skorosty,
         "Napory": Napory,
-        'dt': T
+        'dt': T,
+        'max_val': (np.max(Napory) ,np.max(Davleniya), np.max(Skorosty)),
+        'min_val': (np.min(Napory) ,np.min(Davleniya), np.min(Skorosty))
     }
     
 
