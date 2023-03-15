@@ -12,7 +12,7 @@ def count_len_N_numOfElementsInLists(data): #передаем json считае�
         num_of_elements_in_lists += data['pipeParams'][i][0]
         L += data['pipeParams'][i][0] * 1000
         N += data['pipeParams'][i][0]
-    num_of_elements_in_lists += len(data['pumpParams']) * 2 + len(data['gateValveParams']) * 2 + 2
+    num_of_elements_in_lists += len(data['pumpParams']) * 2 + len(data['gateValveParams']) * 2 +len(data['safeValveParams']) * 2+ 2
     L+=2000
     N += 3
     return (L, N, num_of_elements_in_lists)
@@ -23,7 +23,7 @@ def make_x(data, L, N):
     xx = []
     count_pipe_iter = 0
     for y in data['pipeline']:
-        if y == 'pump' or y == 'gateValve':
+        if y == 'pump' or y == 'gateValve'or y == 'safeValve':
             xx.extend([x, x])
             x += dx
         elif y == 'pipe':
@@ -127,6 +127,14 @@ def calculate(data):
                     main.append(
                         bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
+            elif y =='safeValve':
+                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 1, 9*10**5,1.3 * 9*10**5, 
+                                                  data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
+                                                   v, ro, T))
+                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 2, 9*10**5,1.3 * 9*10**5, 
+                                                  data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
+                                                   v, ro, T))
+                iter += 2
         times.append(t)
         t+=T             
         '''Распаковка main'''  
@@ -162,16 +170,25 @@ def calculate(data):
 
 
 if __name__ =='__main__':
+    # js = {'condParams': [[500, 850, 10]],
+    #  'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
+    #  'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
+    #  'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
+    #  'gateValveParams': [[1, 100, 100, 100]]}
+    
+
     js = {'condParams': [[500, 850, 10]],
-     'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
-     'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
-     'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
-     'gateValveParams': [[1, 100, 100, 100]]}
-    # js = {'condParams': [[300, 850, 10]],
-    #  'pipeline': ['pump', 'pipe'],
-    #  'pipeParams': [[100, 1]],
-    #  'pumpParams': [[310, 8e-07, 1, 0, 20]],
-    #  'gateValveParams': []}
+    'pipeline': ['pump', 'pipe', 'safeValve', 'pipe'],
+    'pipeParams': [[100, 1], [100, 1]],
+    'pumpParams': [[310, 8e-07, 1, 0, 20]], 
+    'gateValveParams': [],
+    'safeValveParams': [[]]}
+    
     print(calculate(js))
 
-    
+    {'condParams': [[500, 850, 10]],
+    'pipeline': ['pump', 'pipe', 'safeValve', 'pipe'],
+    'pipeParams': [[100, 1], [100, 1]],
+    'pumpParams': [[310, 8e-07, 1, 0, 20]], 
+    'gateValveParams': [],
+    'safeValveParams': [[]]}

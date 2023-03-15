@@ -9,11 +9,12 @@ function setColorForLables(color) {
         warringtext[i].style.color = color;
     }
 }
-let condParams = [[100, 850, 10]];
+let condParams = [[500, 850, 10]];
 let pipeline = [];
 let pipeParams = [];
 let pumpParams = [];
 let gateValveParams = [];
+let safeValveParams = [];
 
 // Увеличиваем масштаб .workspace при skroll
 var scale = 1,
@@ -91,11 +92,12 @@ resetBtn = document.getElementById('resetBtn');
 resetBtn.onclick = function () {
     let mainSVG = d3.select("#mainSVG");
     mainSVG.selectAll("*").remove();
-    condParams = [[100, 850, 10]];
+    condParams = [[500, 850, 10]];
     pipeline = [];
     pipeParams = [];
     pumpParams = [];
     gateValveParams = [];
+    safeValveParams = [];
     y = '150';
     x = '100';
 }
@@ -127,7 +129,8 @@ startBtn.onclick = function () {
             "pipeline": pipeline,
             "pipeParams": pipeParams,
             "pumpParams": pumpParams,
-            "gateValveParams": gateValveParams
+            "gateValveParams": gateValveParams,
+            "safeValveParams": safeValveParams
         }
         fetch('/index', {
             headers: {
@@ -144,7 +147,7 @@ startBtn.onclick = function () {
                     startBtnOuter.style.display = 'none';
                     response.json()
                         .then(function (response) {
-                            console.log(response.min_val[0])
+                            console.log(response)
                             drawChart(response, response.Napory, 150, 'H');
                             drawChart(response, response.Davleniya, -10, 'P')
                             drawChart(response, response.Skorosty, -10, 'S');
@@ -175,9 +178,9 @@ menuBtn.onclick = function () {
         listBtns[i].classList.toggle('menuTextBefore')
     };
     if (leftSide.style.width === '250px') {
-        leftSide.style.width = '90px'
+        leftSide.style.width = '90px';
     } else {
-        leftSide.style.width = '250px'
+        leftSide.style.width = '250px';
     }
 }
 
@@ -190,7 +193,7 @@ let x = '100';
 function setNoneConv() {
     let envCond = document.getElementById('envCond');
     envCond.style.display = 'none';
-    document.getElementById('timeToIter').value = '100';
+    document.getElementById('timeToIter').value = '500';
     document.getElementById('density').value = '850';
     document.getElementById('viscosity').value = '10';
 }
@@ -449,6 +452,9 @@ objBtns[2].onclick = function () {
 objBtns[3].onclick = function () {
     dy = '20';
     dx = '40';
+    pipeline.push('safeValve');
+    safeValveParams.push([])
+
     let svg = document.getElementsByTagName('svg')[0];
     let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
     g.setAttribute('class', 'safetyGate')

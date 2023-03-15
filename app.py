@@ -15,6 +15,7 @@ app.config.from_object(__name__)
 def index():   
     if request.method == "POST":
         jsonData = request.get_json()
+        print(jsonData)
         res = json.dumps(calculate(jsonData))
         return res
         
