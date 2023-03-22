@@ -157,6 +157,26 @@
             <input id="gateValveFormBtn" class ="textFieldButton" type="submit" value="Добавить">
         </div>
     </div>
+    <!-- форма для данных предохранительного клапана -->
+    <div id="safeValveForm">
+        <div class = 'textField'>
+            <span id="closeFavSafeValve"  class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
+
+            <label class="textFieldLabel">Коэфициент расхода</label>
+            <span style="font-family: inherit; display: inline; "> <input id="kForSafeValve" class="textFieldInputTime" type="number" value="0.5"> 
+                </span>
+
+            <label class="textFieldLabel">Давление срабатывания</label>
+            <span style="font-family: inherit; display: inline; ">
+                <input id="startPresure" class="textFieldInput" type="number" value="9"> атм
+            </span>
+            <!-- <span style="font-family: inherit; display: inline; ">
+                <input id="openPresure" class="textFieldInput" type="number" value="100"> атм
+            </span> -->
+            <input id="safeValveFormBtn" class ="textFieldButton" type="submit" value="Добавить">
+        </div>
+    </div>
+
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="{{url_for('static', filename = 'js/chart.js')}}"></script>
     <script src="{{url_for('static', filename = 'js/manipulations.js')}}"></script>

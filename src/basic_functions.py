@@ -180,7 +180,7 @@ def left_boundary_method(P, V, i, p_const, d, v, ro, T):
     H = count_H(p_const, i, VV, ro)
     return [pp, VV, H]
 
-def safe_valve_method(P, V, i, chto_vivodim, p_otkr, p_poln_otkr, d1, d2, v, ro, T):
+def safe_valve_method(P, V, i, chto_vivodim, Kvmax,  p_otkr, d1, d2, v, ro, T):
     Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d1, i, v, ro, T)
     Jb = find_Jb(P[-1][i + 2], V[-1][i + 2], d2, i, v, ro, T)
     pp = (Ja + Jb) / (2)
@@ -190,8 +190,8 @@ def safe_valve_method(P, V, i, chto_vivodim, p_otkr, p_poln_otkr, d1, d2, v, ro,
     if pp < p_otkr:
         return [pp, VV, H]
     else:
+        p_poln_otkr = 1.3 * p_otkr
         p = 10**5
-        Kvmax = 0.5
         S1 = math.pi * d1**2 / 4
         S2 = math.pi * d2**2 / 4
         A =((S1+S2)/ro/c)**2# Коэфициенты неправильные
@@ -262,6 +262,6 @@ if __name__ =='__main__':
     T = L / (N * c)
     vis_otm = np.array([0]*N)
     
-    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 1, 9*10**5, 1.3 * 9*10**5, 1, 1, 10**(-6), 800, 1))
-    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 2, 9*10**5, 1.3 * 9*10**5, 1, 1, 10**(-6), 800, 1))
+    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 1, 9*10**5, 1, 1, 10**(-6), 800, 1))
+    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 2, 9*10**5, 1, 1, 10**(-6), 800, 1))
     print(" ")

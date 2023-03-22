@@ -53,6 +53,19 @@ html, body {
   background-color: #deca16;
 }
 
+#safeValveForm{
+  display: none; 
+  position: fixed;
+  top: 400px;
+  left: 100px;
+  height: 190px;
+  width: 310px;
+  z-index: 2;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #deca16;
+}
+
 .objSelect{
   margin-top: 10px;
   display: block;

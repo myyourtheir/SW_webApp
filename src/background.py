@@ -81,6 +81,7 @@ def calculate(data):
         count_pump_iter = 0
         count_pipe_iter = 0
         count_tap_iter = 0
+        count_safe_valve_iter =0
         iter = 0
         main = []
         for y in data['pipeline']:
@@ -128,13 +129,16 @@ def calculate(data):
                         bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
             elif y =='safeValve':
-                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 1, 9*10**5,1.3 * 9*10**5, 
-                                                  data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
-                                                   v, ro, T))
-                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 2, 9*10**5,1.3 * 9*10**5, 
-                                                  data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
-                                                   v, ro, T))
+                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 1, data['safeValveParams'][count_safe_valve_iter][0], 
+                                                data['safeValveParams'][count_safe_valve_iter][1], 
+                                                data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
+                                                v, ro, T))
+                main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 2, data['safeValveParams'][count_safe_valve_iter][0], 
+                                                data['safeValveParams'][count_safe_valve_iter][1], 
+                                                data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
+                                                v, ro, T))
                 iter += 2
+                count_safe_valve_iter += 1
         times.append(t)
         t+=T             
         '''Распаковка main'''  

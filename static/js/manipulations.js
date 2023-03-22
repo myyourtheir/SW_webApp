@@ -81,8 +81,9 @@ delBtn.onclick = function () {
         gateValveParams.pop();
         d3.selectAll('.gateValve:last-of-type').remove();
         x = x - 40
-    } else if (lastElem === 'safetyGate') {
-        d3.selectAll('.safetyGate:last-of-type').remove();
+    } else if (lastElem === 'safeValve') {
+        safeValveParams.pop()
+        d3.selectAll('.safeValve:last-of-type').remove();
         x = x - 40;
     }
 };
@@ -222,6 +223,14 @@ function setNoneGateValve() {
     document.getElementById('percentGateValve').value = '100';
 }
 
+function setNoneSafeValve() {
+    safeValveForm = document.getElementById('safeValveForm');
+    safeValveForm.style.display = 'none';
+    document.getElementById('kForSafeValve').value = '0.5';
+    document.getElementById('startPresure').value = '9';
+    
+}
+
 // Меню параметров среды
 let toolBarInnerCondBtn = document.getElementById('toolBarInnerConditions');
 toolBarInnerCondBtn.onclick = function () {
@@ -258,7 +267,7 @@ let objBtns = document.querySelectorAll('.circleImage')
 
 
 
-pipeForm = document.getElementById('pipeFormBtn');
+
 
 // трубопровод
 objBtns[0].onclick = function () {
@@ -266,6 +275,7 @@ objBtns[0].onclick = function () {
     setNoneGateValve();
     setNonePump();
     setNoneConv();
+    setNoneSafeValve();
 
     pipeForm = document.getElementById('pipeForm');
     pipeForm.style.display = 'block';
@@ -273,7 +283,7 @@ objBtns[0].onclick = function () {
     closeFavPipe = document.getElementById('closeFavPipe');
     closeFavPipe.onclick = function () {
         setNonePipe();
-    }
+    };
     pipeFormBtn.onclick = function (e, dx = document.getElementById('lengthOfPipe').value) {
         if (document.getElementById('lengthOfPipe').value === '' || document.getElementById('diameterOfPipe').value === '') {
             setColorForLables('red');
@@ -330,6 +340,7 @@ objBtns[1].onclick = function () {
     setNonePipe();
     setNoneGateValve();
     setNoneConv();
+    setNoneSafeValve();
 
     pumpForm = document.getElementById('pumpForm');
     pumpForm.style.display = 'block';
@@ -399,6 +410,7 @@ objBtns[2].onclick = function () {
     setNonePipe();
     setNoneConv();
     setNonePump();
+    setNoneSafeValve();
 
     gateValveForm = document.getElementById('gateValveForm');
     gateValveForm.style.display = 'block';
@@ -450,44 +462,69 @@ objBtns[2].onclick = function () {
 
 // пред.клапан
 objBtns[3].onclick = function () {
-    dy = '20';
-    dx = '40';
-    pipeline.push('safeValve');
-    safeValveParams.push([])
+    setNonePipe();
+    setNoneConv();
+    setNonePump();
+    setNoneGateValve();
 
-    let svg = document.getElementsByTagName('svg')[0];
-    let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
-    g.setAttribute('class', 'safetyGate')
+    safeValveForm = document.getElementById('safeValveForm');
+    safeValveForm.style.display = 'block';
+    safeValveFormBtn = document.getElementById('safeValveFormBtn');
+    closeFavSafeValve = document.getElementById('closeFavSafeValve');
+    closeFavSafeValve.onclick = function () {
+        setNoneSafeValve();
+    };
 
-    let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-    pg.setAttribute('fill', 'white')
-    pg.setAttribute('stroke', '#000')
-    pg.setAttribute("points",
-        x + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
-        ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) - parseInt(dy / 2)).toString() +
-        ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
-        ' ' + x + "," + (parseInt(y) - parseInt(dy / 2)).toString()
-    );
-    pg.setAttribute('stroke-width', '2');
+    safeValveFormBtn.onclick = function () {
+        if (document.getElementById('kForSafeValve').value === '' || document.getElementById('startPresure').value === '') {
+            setColorForLables('red');
+        }
+        else{
+            pipeline.push('safeValve');
+            safeValveParams.push([parseFloat(document.getElementById('kForSafeValve').value), parseInt(document.getElementById('startPresure').value)*10**5]);
 
-    let pl = document.createElementNS("http://www.w3.org/2000/svg", 'polyline');
-    pl.setAttribute("stroke", '#000')
-    pl.setAttribute("fill", 'transparent')
-    pl.setAttribute('points',
-        (parseInt(x) + parseInt(dx / 2)).toString() + "," + y +
-        ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 7).toString() +
-        ' ' + (parseInt(x) + parseInt(dx / 2) + 10).toString() + "," + (parseInt(y) - 12).toString() +
-        ' ' + (parseInt(x) + parseInt(dx / 2) - 10).toString() + "," + (parseInt(y) - 17).toString() +
-        ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 22).toString() +
-        ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 27).toString()
-    );
+            dy = '20';
+            dx = '40';
 
 
-    x = (parseInt(x) + parseInt(dx)).toString();
+            let svg = document.getElementsByTagName('svg')[0];
+            let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+            g.setAttribute('class', 'safeValve')
 
-    g.appendChild(pg);
-    g.appendChild(pl)
-    svg.appendChild(g);
+            let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+            pg.setAttribute('fill', 'white')
+            pg.setAttribute('stroke', '#000')
+            pg.setAttribute("points",
+                x + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
+                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) - parseInt(dy / 2)).toString() +
+                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
+                ' ' + x + "," + (parseInt(y) - parseInt(dy / 2)).toString()
+            );
+            pg.setAttribute('stroke-width', '2');
+
+            let pl = document.createElementNS("http://www.w3.org/2000/svg", 'polyline');
+            pl.setAttribute("stroke", '#000')
+            pl.setAttribute("fill", 'transparent')
+            pl.setAttribute('points',
+                (parseInt(x) + parseInt(dx / 2)).toString() + "," + y +
+                ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 7).toString() +
+                ' ' + (parseInt(x) + parseInt(dx / 2) + 10).toString() + "," + (parseInt(y) - 12).toString() +
+                ' ' + (parseInt(x) + parseInt(dx / 2) - 10).toString() + "," + (parseInt(y) - 17).toString() +
+                ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 22).toString() +
+                ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 27).toString()
+            );
+
+
+            x = (parseInt(x) + parseInt(dx)).toString();
+
+            g.appendChild(pg);
+            g.appendChild(pl)
+            svg.appendChild(g);
+
+            setNoneSafeValve();
+            setColorForLables('black');
+        }
+    }
 }
 
 
