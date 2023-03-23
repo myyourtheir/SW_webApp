@@ -188,7 +188,7 @@ def safe_valve_method(P, V, i, chto_vivodim, Kvmax,  p_otkr, d1, d2, v, ro, T):
     H = count_H(pp, i, VV, ro)
 
     if pp < p_otkr:
-        return [pp, VV, H]
+        return [pp, VV, H, 0]
     else:
         p_poln_otkr = 1.3 * p_otkr
         p = 10**5
@@ -207,46 +207,38 @@ def safe_valve_method(P, V, i, chto_vivodim, Kvmax,  p_otkr, d1, d2, v, ro, T):
             H1 = count_H(pp, i, V1, ro)
             H2 = count_H(pp, i, V2, ro)
             if chto_vivodim == 1:
-                return [pp, V1, H1]
+                return [pp, V1, H1, "Kvmax"]
             else:
-                return [pp, V2, H2]
+                return [pp, V2, H2, "Kvmax"]
         else:
-            k =(pp-p_otkr)/( p_poln_otkr-p_otkr) * Kvmax
-            def find_d_F12(Pm):
+            # k =(pp-p_otkr)/( p_poln_otkr-p_otkr) * Kvmax
+            def F12(Pm):
                 def F1(Pm):
                     return (Ja - Pm)/ro/c * S1  + (Pm-Jb)/ro/c * S2
                 def F2(Pm):
-                    return Pm * k * ((2 * Pm - 10**5)/ro)**0.5
+                    return (Pm -p_otkr)/( p_poln_otkr-p_otkr) * Kvmax* ((2 * Pm - 10**5)/ro)**0.5
                 return F1(Pm) - F2(Pm)
+
+            def find_root(f, a, b, eps):
+                while abs(b - a) > eps:
+                    c = (a + b) / 2.0
+                    if f(a) * f(c) < 0:
+                        b = c
+                    else:
+                        a = c
+                return (a + b) / 2.0
             
-            def find_half_p(P1, P2):
-                return (P1+P2)/2
-            
-            def step_iter_p(P1, P2):
-                half = find_d_F12(find_half_p(P1, P2))
-                if np.sign(find_d_F12(P1)) == np.sign(half):
-                    P1 = half
-                    P2 = P2
-                elif np.sign(find_d_F12(P2)) == np.sign(half):
-                    P1 = P1
-                    P2 = half
-                else:
-                    print('Что-то с условием')
-                return P1, P2
-            
-            P1 = p_otkr
-            P2 = p_poln_otkr
-            while (P1 - P2) >= 5*10**3:
-               P1, P2 = step_iter_p(P1, P2)
-            pp = find_half_p(P1, P2)
+            pp = find_root(F12, p_otkr, p_poln_otkr, 3*10**3)
+
+            k =(pp-p_otkr)/( p_poln_otkr-p_otkr) 
             V1 = (Ja - pp) / ro / c
             V2 = (-Jb + pp) / ro / c
             H1 = count_H(pp, i, V1, ro)
             H2 = count_H(pp, i, V2, ro)
             if chto_vivodim == 1:
-                return [pp, V1, H1]
+                return [pp, V1, H1, k]
             else:
-                return [pp, V2, H2]
+                return [pp, V2, H2, k]
                 
             
             
@@ -262,6 +254,6 @@ if __name__ =='__main__':
     T = L / (N * c)
     vis_otm = np.array([0]*N)
     
-    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 1, 9*10**5, 1, 1, 10**(-6), 800, 1))
-    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 2, 9*10**5, 1, 1, 10**(-6), 800, 1))
+    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 1, 0.5, 9*10**5, 1, 1, 10**(-6), 800, 1))
+    print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 2, 0.5, 9*10**5, 1, 1, 10**(-6), 800, 1))
     print(" ")

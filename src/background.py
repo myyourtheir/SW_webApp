@@ -4,6 +4,7 @@ import basic_functions as bf
 import json
 import numpy as np
 
+k_list =[]
 def count_len_N_numOfElementsInLists(data): #передаем json считает длину трубы
     L=0
     N=0
@@ -137,6 +138,7 @@ def calculate(data):
                                                 data['safeValveParams'][count_safe_valve_iter][1], 
                                                 data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
                                                 v, ro, T))
+                k_list.append(main[-1][3])
                 iter += 2
                 count_safe_valve_iter += 1
         times.append(t)
@@ -161,8 +163,8 @@ def calculate(data):
         'Skorosty' : Skorosty,
         "Napory": Napory,
         'dt': T,
-        'max_val': (np.max(Napory) ,np.max(Davleniya), np.max(Skorosty)),
-        'min_val': (np.min(Napory) ,np.min(Davleniya), np.min(Skorosty))
+        'max_val': (np.max(Napory), np.max(Davleniya), np.max(Skorosty)),
+        'min_val': (np.min(Napory), np.min(Davleniya), np.min(Skorosty))
     }
     
 
@@ -186,13 +188,9 @@ if __name__ =='__main__':
     'pipeParams': [[100, 1], [100, 1]],
     'pumpParams': [[310, 8e-07, 1, 0, 20]], 
     'gateValveParams': [],
-    'safeValveParams': [[]]}
+    'safeValveParams': [[1, 900000]]}
     
-    print(calculate(js))
+    calculate(js)
+    print(k_list)
 
-    {'condParams': [[500, 850, 10]],
-    'pipeline': ['pump', 'pipe', 'safeValve', 'pipe'],
-    'pipeParams': [[100, 1], [100, 1]],
-    'pumpParams': [[310, 8e-07, 1, 0, 20]], 
-    'gateValveParams': [],
-    'safeValveParams': [[]]}
+    
