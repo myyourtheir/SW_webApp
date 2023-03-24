@@ -1,8 +1,8 @@
 
 # Нужно обратить внимание в продакшене на путь импорта этого модуля
 import basic_functions as bf
-import json
 import numpy as np
+import time
 
 k_list =[]
 def count_len_N_numOfElementsInLists(data): #передаем json считает длину трубы
@@ -78,6 +78,8 @@ def calculate(data):
     times = []
     data['pipeline'].append('right_boundary')
     data['pipeline'].insert(0, 'left_boundary')
+
+    xx = make_x(data, L, N) 
     while t <= t_rab:
         count_pump_iter = 0
         count_pipe_iter = 0
@@ -138,7 +140,7 @@ def calculate(data):
                                                 data['safeValveParams'][count_safe_valve_iter][1], 
                                                 data['pipeParams'][count_pipe_iter][1], data['pipeParams'][count_pipe_iter+1][1],
                                                 v, ro, T))
-                k_list.append(main[-1][3])
+                # k_list.append(main[-1][3])
                 iter += 2
                 count_safe_valve_iter += 1
         times.append(t)
@@ -156,31 +158,22 @@ def calculate(data):
         Skorosty.append(V_moment)
         Napory.append(H_moment)
         
-    xx = make_x(data, L, N) 
-    res = {
-        'x': xx,
-        'Davleniya': Davleniya,
-        'Skorosty' : Skorosty,
-        "Napory": Napory,
-        'dt': T,
-        'max_val': (np.max(Napory), np.max(Davleniya), np.max(Skorosty)),
-        'min_val': (np.min(Napory), np.min(Davleniya), np.min(Skorosty))
-    }
+        yield {
+            'x': xx,
+            'Davleniya': [{"x": x, "y": y} for x, y in zip(xx, p_moment)],
+            'Skorosty' : [{"x": x, "y": y} for x, y in zip(xx, V_moment)],
+            "Napory": [{"x": x, "y": y} for x, y in zip(xx, H_moment)],
+            't': t,
+            'max_val': (np.max(H_moment), np.max(p_moment), np.max(V_moment)),
+            'min_val': (np.min(H_moment), np.min(p_moment), np.min(V_moment))
+        }
+        # time.sleep(1)
+         
     
 
-
-    return res
     
-
-
-
 
 if __name__ =='__main__':
-    # js = {'condParams': [[500, 850, 10]],
-    #  'pipeline': ['pump', 'pipe', 'pump', 'pipe', 'gateValve', 'pipe', 'pump', 'pipe'],
-    #  'pipeParams': [[100, 1], [100, 1], [10, 1], [100, 1]],
-    #  'pumpParams': [[310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20], [310, 8e-07, 1, 0, 20]],
-    #  'gateValveParams': [[1, 100, 100, 100]]}
     
 
     js = {'condParams': [[500, 850, 10]],
@@ -190,7 +183,8 @@ if __name__ =='__main__':
     'gateValveParams': [],
     'safeValveParams': [[1, 900000]]}
     
-    calculate(js)
-    print(k_list)
+    
+    generator = calculate(js)
+    print(next(generator))
 
     

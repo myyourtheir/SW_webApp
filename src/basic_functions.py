@@ -240,13 +240,6 @@ def safe_valve_method(P, V, i, chto_vivodim, Kvmax,  p_otkr, d1, d2, v, ro, T):
             else:
                 return [pp, V2, H2, k]
                 
-            
-            
-
-
-
-
-
 
 if __name__ =='__main__':
     L = 100 *10**3

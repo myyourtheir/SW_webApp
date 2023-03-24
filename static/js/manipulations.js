@@ -1,3 +1,4 @@
+
 d3.selection.prototype.last = function () {
     var last = this.size() - 1;
     return d3.select(this[0][last]);
@@ -121,11 +122,12 @@ let topMenuBtns1 = document.getElementById('manipulatingButtons1')
 let topMenuBtns2 = document.getElementById('manipulatingButtons2');
 let startBtnOuter = document.getElementById('startBtnOuter')
 
-// Отправка запроса на сервер для расчета и получение ответа
+// создание вебсокета
+var socket = io();
 startBtn = document.getElementById('startBtn');
 startBtn.onclick = function () {
     if (pipeline.includes('pipe')) {
-        req = {
+        let req = {
             "condParams": condParams,
             "pipeline": pipeline,
             "pipeParams": pipeParams,
@@ -133,36 +135,18 @@ startBtn.onclick = function () {
             "gateValveParams": gateValveParams,
             "safeValveParams": safeValveParams
         }
-        fetch('/index', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(req)
-        })
-            .then(function (response) {
+        socket.emit('json', JSON.stringify(req));
+        topMenuBtns1.style.display = "none";
+        topMenuBtns2.style.display = "inline";
+        startBtnOuter.style.display = 'none';
 
-                if (response.ok) {
-                    topMenuBtns1.style.display = "none";
-                    topMenuBtns2.style.display = "inline";
-                    startBtnOuter.style.display = 'none';
-                    response.json()
-                        .then(function (response) {
-                            console.log(response)
-                            drawChart(response, response.Napory, 150, 'H');
-                            drawChart(response, response.Davleniya, -10, 'P')
-                            drawChart(response, response.Skorosty, -10, 'S');
-                        });
-
-                }
-                else {
-                    throw Error('Something went wrong');
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+        
+                drawChart(); //150
+                // drawChart(res, res.Davleniya, -10, 'P')
+                // drawChart(res, res.Skorosty, -10, 'S');
+            
+        
+    }   
     else {
         condLbl = document.getElementById('conditionLbl');
         condLbl.innerHTML = 'Добавьте элементы в трубопровод'

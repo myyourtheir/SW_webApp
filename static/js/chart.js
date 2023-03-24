@@ -3,35 +3,12 @@ const sleep = (ms) => {
   };  
 
 
-const drawChart = async(res, resY, marginY, par) => {
-    let markerY = NaN;
-    let colorOfLine =NaN;
+const drawChart = async () => {
     let t = 0;
-    let dt = res.dt;
-    if (par==='H'){
-        markerY = 'H, м';
-        colorOfLine = 'red';
-        minVal = res.min_val[0] - 50;
-        maxVal = res.max_val[0] + 50;
-        
-    };
-    if (par==='S'){
-        markerY = 'V, м/c';
-        colorOfLine = 'steelblue';
-        minVal = res.min_val[2] - 1;
-        maxVal = res.max_val[2] + 1;
-    };
-    if (par==='P'){
-        markerY = 'p, Па';
-        colorOfLine = 'green';
-        minVal = res.min_val[1] - 1000000;
-        maxVal = res.max_val[1] + 1000000;
-    };
-
     var height = 300, 
     width = x, 
-    margin= 30;
-
+    margin= 30,
+    marginY = 150;
     
 
     var svg = d3.select(".workSpace")
@@ -44,12 +21,12 @@ const drawChart = async(res, resY, marginY, par) => {
     var yAxisLength = height - 2 * margin;
 
     var scaleX = d3.scaleLinear()
-                    .domain([d3.min(res.x),d3.max(res.x)])
+                    // .domain([d3.min(res.x),d3.max(res.x)])
                     .range([0, xAxisLength]);
 
     var scaleY = d3.scaleLinear()
-                    .domain([maxVal, minVal])
-                    .range([0, yAxisLength]);
+                    // .domain([maxVal, minVal])
+                    .range([yAxisLength, 0]);
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
                     .ticks(3, ".0f");
@@ -86,67 +63,56 @@ const drawChart = async(res, resY, marginY, par) => {
         .attr("text-anchor", "end")
         .style("font-size", "14px")
         .style('fill', 'black')
-        .text(markerY);
-    if (par ==="H"){
-        svg.append("text")
-            .attr('class', 'labelTime')
-            .attr("x", width)
-            .attr("y", marginY + margin)
-            .attr("text-anchor", "end")
-            .style("font-size", "14px")
-            .style('fill', 'black')
-            .text(t);
-    }
-    let fullData = [];
-    for (let j = 0; j < res.Napory.length; j++){
-
-        let dataMoment = []
-        for(i=0; i<res.x.length; i++){
-                    dataMoment.push({x: scaleX(res.x[i])+100, y: scaleY(resY[j][i]) +margin + marginY});
-        };
-        fullData.push(dataMoment)
-    };
-
-    for(let iter = 0; iter<= fullData.length-1;){
-
-        if (!anim) {
-            await sleep(1)
-        }
-        else{
-            updateLine(fullData[iter], colorOfLine)
-                timeLabel = d3.select('.labelTime')
-                            .text('t = ' + t.toFixed(2)+ 'c')
-                t+=dt
-        iter+=1;
-        await sleep(50)
-        }
-    };
+        .text("H, м");
     
+    svg.append("text")
+        .attr('class', 'labelTime')
+        .attr("x", width)
+        .attr("y", marginY + margin)
+        .attr("text-anchor", "end")
+        .style("font-size", "14px")
+        .style('fill', 'black')
+        .text(t);
+
+    svg.append('path')
+        .attr('class', 'line');
+
+    const line = d3.line()
+    .x(d => scaleX(d.x)+100)
+    .y(d => scaleY(d.y)+margin + marginY);
+
     
 
+    socket.on('res', res => {
+        res = JSON.parse(res)
+        t = res.t;
+        updateGraph(res.Napory, 'blue')
+        timeLabel = d3.select('.labelTime')
+                        .text('t = ' + t.toFixed(2)+ 'c')
         
-
+    });
     
-    
-    function updateLine (data, colorOfLine){
-          
-        var u = svg.selectAll(".lineTest")
-            .data([data], function(d){ return {x :d.x, y: d.y}});
-
-        u
-        .enter()
-        .append("path")
-        .attr("class","lineTest")
-        .merge(u)
-        .transition()
-        .duration(0)
-        .attr("d", d3.line()
-            .x(function(d) { return d.x;})
-            .y(function(d) { return d.y;}))
+    function updateGraph(newData) {
+        data = newData;
+      
+        // Update the domains
+        scaleX.domain(d3.extent(data, d => d.x));
+        scaleY.domain(d3.extent(data, d => d.y));
+      
+        // Update the axes
+        svg.select('.x-axis')
+          .call(xAxis);
+      
+        svg.select('.y-axis')
+          .call(yAxis);
+      
+        // Update the line path
+        svg.select('.line')
+          .datum(data)
+          .attr('d', line)
             .attr("fill", "none")
-            .attr("stroke", colorOfLine)
-            .attr("stroke-width", 2)
-        }
+            .attr("stroke", 'red')
+            .attr("stroke-width", 2);
     }
-
+}
 
