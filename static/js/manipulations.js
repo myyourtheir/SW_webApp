@@ -110,11 +110,13 @@ let anim = true;
 let pauseBtn = document.getElementById('pauseBtn');
 pauseBtn.onclick = function animStop() {
     anim = false
+    socket.emit('anim', JSON.stringify(anim));
 };
 //продолжить анимацию
 let resumeBtn = document.getElementById('resumeBtn');
 resumeBtn.onclick = function animResume() {
     anim = true;
+    socket.emit('anim', JSON.stringify(anim));
 };
 
 
@@ -141,9 +143,9 @@ startBtn.onclick = function () {
         startBtnOuter.style.display = 'none';
 
         
-                drawChart(); //150
-                // drawChart(res, res.Davleniya, -10, 'P')
-                // drawChart(res, res.Skorosty, -10, 'S');
+                drawChart('H'); //150
+                drawChart('P')
+                drawChart('S');
             
         
     }   

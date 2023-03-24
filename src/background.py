@@ -177,7 +177,7 @@ if __name__ =='__main__':
     
 
     js = {'condParams': [[500, 850, 10]],
-    'pipeline': ['pump', 'pipe', 'safeValve', 'pipe'],
+    'pipeline': ['pump', 'pipe'],
     'pipeParams': [[100, 1], [100, 1]],
     'pumpParams': [[310, 8e-07, 1, 0, 20]], 
     'gateValveParams': [],
@@ -185,6 +185,7 @@ if __name__ =='__main__':
     
     
     generator = calculate(js)
-    print(next(generator))
+    while True:
+        a = next(generator)
 
     

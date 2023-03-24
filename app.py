@@ -10,14 +10,24 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 socketio = SocketIO(app)
 
+@socketio.on('anim')
+def handle_animation(anim):
+    animate = json.loads(anim)
+    if animate == "true":
+        an = True
+    else:
+        an = False
 @socketio.on('json')
 def handle_json(json_data):
     data = json.loads(json_data)
     generator = calculate(data)
     while True:
+        # if an:
         res =  json.dumps(next(generator))
         emit('res', res)
         time.sleep(0.07)
+        # else: continue
+
         
 
 

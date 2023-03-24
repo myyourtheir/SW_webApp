@@ -3,12 +3,47 @@ const sleep = (ms) => {
   };  
 
 
-const drawChart = async () => {
+const drawChart = async (par) => {
+    let markerY = NaN;
+    let colorOfLine =NaN;
+    let marginY = NaN;
     let t = 0;
+    if (par==='H'){
+        markerY = 'H, м';
+        colorOfLine = 'red';
+        marginY = 150;
+        minVal = 600 ;
+        maxVal = -100;
+        
+    };
+    if (par==='S'){
+        markerY = 'V, м/c';
+        colorOfLine = 'steelblue';
+        marginY = -10;
+        minVal = 5 ;
+        maxVal = -1 ;
+        
+    };
+    if (par==='P'){
+        markerY = 'p, Па';
+        colorOfLine = 'green';
+        marginY = -10;
+        minVal = 4000000;
+        maxVal = -1000000;
+        
+       
+    };
+
     var height = 300, 
     width = x, 
-    margin= 30,
-    marginY = 150;
+    margin= 30;
+
+    // 1 chart(H)
+    
+    var height = 300, 
+    width = x, 
+    margin= 30;
+    
     
 
     var svg = d3.select(".workSpace")
@@ -25,7 +60,7 @@ const drawChart = async () => {
                     .range([0, xAxisLength]);
 
     var scaleY = d3.scaleLinear()
-                    // .domain([maxVal, minVal])
+                    .domain([maxVal, minVal])
                     .range([yAxisLength, 0]);
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
@@ -63,7 +98,7 @@ const drawChart = async () => {
         .attr("text-anchor", "end")
         .style("font-size", "14px")
         .style('fill', 'black')
-        .text("H, м");
+        .text(markerY);
     
     svg.append("text")
         .attr('class', 'labelTime')
@@ -86,18 +121,19 @@ const drawChart = async () => {
     socket.on('res', res => {
         res = JSON.parse(res)
         t = res.t;
-        updateGraph(res.Napory, 'blue')
+        selectedData = par === "H"? res.Napory: par === "S"? res.Skorosty:res.Davleniya
+        updateGraph(selectedData, colorOfLine)
         timeLabel = d3.select('.labelTime')
                         .text('t = ' + t.toFixed(2)+ 'c')
         
     });
     
-    function updateGraph(newData) {
+    function updateGraph(newData, colorOfLine) {
         data = newData;
       
         // Update the domains
         scaleX.domain(d3.extent(data, d => d.x));
-        scaleY.domain(d3.extent(data, d => d.y));
+        // scaleY.domain(d3.extent(data, d => d.y));
       
         // Update the axes
         svg.select('.x-axis')
@@ -111,7 +147,7 @@ const drawChart = async () => {
           .datum(data)
           .attr('d', line)
             .attr("fill", "none")
-            .attr("stroke", 'red')
+            .attr("stroke", colorOfLine)
             .attr("stroke-width", 2);
     }
 }
