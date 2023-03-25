@@ -13,7 +13,7 @@ const drawChart = async (par) => {
         colorOfLine = 'red';
         marginY = 150;
         minVal = 600 ;
-        maxVal = -100;
+        maxVal = -200;
         
     };
     if (par==='S'){
@@ -28,8 +28,8 @@ const drawChart = async (par) => {
         markerY = 'p, Па';
         colorOfLine = 'green';
         marginY = -10;
-        minVal = 4000000;
-        maxVal = -1000000;
+        minVal = 5;
+        maxVal = -2;
         
        
     };
@@ -99,7 +99,7 @@ const drawChart = async (par) => {
         .style("font-size", "14px")
         .style('fill', 'black')
         .text(markerY);
-    
+    if (par==='H'){
     svg.append("text")
         .attr('class', 'labelTime')
         .attr("x", width)
@@ -108,7 +108,8 @@ const drawChart = async (par) => {
         .style("font-size", "14px")
         .style('fill', 'black')
         .text(t);
-
+    }
+    
     svg.append('path')
         .attr('class', 'line');
 
@@ -116,6 +117,7 @@ const drawChart = async (par) => {
     .x(d => scaleX(d.x)+100)
     .y(d => scaleY(d.y)+margin + marginY);
 
+    
     
 
     socket.on('res', res => {

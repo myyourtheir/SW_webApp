@@ -10,23 +10,25 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 socketio = SocketIO(app)
 
+
 @socketio.on('anim')
-def handle_animation(anim):
-    animate = json.loads(anim)
-    if animate == "true":
-        an = True
-    else:
-        an = False
+def handle_anim(anim):
+    global an
+    an = anim
+
 @socketio.on('json')
 def handle_json(json_data):
+    global an
+    an = True
     data = json.loads(json_data)
     generator = calculate(data)
     while True:
-        # if an:
-        res =  json.dumps(next(generator))
-        emit('res', res)
-        time.sleep(0.07)
-        # else: continue
+        if an:
+            res =  json.dumps(next(generator))
+            emit('res', res)
+            time.sleep(0.1)
+        else: 
+            time.sleep(0.1)
 
         
 
@@ -48,5 +50,6 @@ def index():
 if __name__ == "__main__":
     # app.run(host ='0.0.0.0', port = 80)
     # app.run(debug = True)
-    socketio.run(app)
+    
+    socketio.run(app, host ='0.0.0.0', port = 80)
     

@@ -159,13 +159,13 @@ def calculate(data):
         Napory.append(H_moment)
         
         yield {
-            'x': xx,
-            'Davleniya': [{"x": x, "y": y} for x, y in zip(xx, p_moment)],
+            # 'x': xx,
+            'Davleniya': [{"x": x, "y": y/10**6} for x, y in zip(xx, p_moment)],
             'Skorosty' : [{"x": x, "y": y} for x, y in zip(xx, V_moment)],
             "Napory": [{"x": x, "y": y} for x, y in zip(xx, H_moment)],
             't': t,
-            'max_val': (np.max(H_moment), np.max(p_moment), np.max(V_moment)),
-            'min_val': (np.min(H_moment), np.min(p_moment), np.min(V_moment))
+            # 'max_val': (np.max(H_moment), np.max(p_moment), np.max(V_moment)),
+            # 'min_val': (np.min(H_moment), np.min(p_moment), np.min(V_moment))
         }
         # time.sleep(1)
          

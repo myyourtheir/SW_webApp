@@ -104,19 +104,21 @@ resetBtn.onclick = function () {
     x = '100';
 }
 
-
+var socket = io();
 // стоп анимации
 let anim = true;
 let pauseBtn = document.getElementById('pauseBtn');
 pauseBtn.onclick = function animStop() {
     anim = false
-    socket.emit('anim', JSON.stringify(anim));
+    socket.emit('anim', anim)
+    
 };
 //продолжить анимацию
 let resumeBtn = document.getElementById('resumeBtn');
 resumeBtn.onclick = function animResume() {
     anim = true;
-    socket.emit('anim', JSON.stringify(anim));
+    socket.emit('anim', anim)
+   
 };
 
 
@@ -125,7 +127,7 @@ let topMenuBtns2 = document.getElementById('manipulatingButtons2');
 let startBtnOuter = document.getElementById('startBtnOuter')
 
 // создание вебсокета
-var socket = io();
+
 startBtn = document.getElementById('startBtn');
 startBtn.onclick = function () {
     if (pipeline.includes('pipe')) {
@@ -143,9 +145,9 @@ startBtn.onclick = function () {
         startBtnOuter.style.display = 'none';
 
         
-                drawChart('H'); //150
-                drawChart('P')
-                drawChart('S');
+        drawChart('H'); 
+        drawChart('P');
+        drawChart('S');
             
         
     }   
