@@ -110,14 +110,14 @@ let anim = true;
 let pauseBtn = document.getElementById('pauseBtn');
 pauseBtn.onclick = function animStop() {
     anim = false
-    socket.emit('anim', anim)
+    // socket.emit('anim', anim)
     
 };
 //продолжить анимацию
 let resumeBtn = document.getElementById('resumeBtn');
 resumeBtn.onclick = function animResume() {
     anim = true;
-    socket.emit('anim', anim)
+    // socket.emit('anim', anim)
    
 };
 
@@ -145,10 +145,32 @@ startBtn.onclick = function () {
         topMenuBtns2.style.display = "inline";
         startBtnOuter.style.display = 'none';
 
+        fullData = {
+            "Davleniya": [],
+            "Napory": [],
+            "Skorosty": [],
+            "t": []
+        }
+
+        socket.on('res', res => {
+            res = JSON.parse(res)
+
+            fullData.t.push(res.t);
+            fullData.Davleniya.push(res.Davleniya)
+            fullData.Skorosty.push(res.Skorosty)
+            fullData.Napory.push(res.Napory)  
+        });
+
+        let interval = setInterval(() => {
+            if (fullData.t.length >= req.condParams[0][0]*0.2){
+                clearInterval(interval);
+                drawChart(fullData, 'H'); 
+                drawChart(fullData, 'P');
+                drawChart(fullData, 'S');  
+                console.log("processed")
+            }
+        }, 1);
         
-        drawChart('H'); 
-        drawChart('P');
-        drawChart('S');
             
         
     }   

@@ -11,25 +11,22 @@ app.config.from_object(__name__)
 socketio = SocketIO(app)
 
 
-@socketio.on('anim')
-def handle_anim(anim):
-    global an
-    an = anim
+# @socketio.on('anim')
+# def handle_anim(anim):
+#     global an
+#     an = anim
 
 @socketio.on('json')
 def handle_json(json_data):
-    global an
-    an = True
+    # global an
+    # an = True
     data = json.loads(json_data)
     
     generator = calculate(data)
     while True:
-        if an:
-            res =  json.dumps(next(generator))
-            emit('res', res)
-            time.sleep(0.1)
-        else: 
-            time.sleep(0.1)
+        res =  json.dumps(next(generator))
+        emit('res', res)
+            
 
 
 

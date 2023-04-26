@@ -3,7 +3,7 @@ const sleep = (ms) => {
   };  
 
 
-const drawChart = async (par) => {
+const drawChart = async (res, par) => {
     let markerY = NaN;
     let colorOfLine =NaN;
     let marginY = NaN;
@@ -118,17 +118,20 @@ const drawChart = async (par) => {
     .y(d => scaleY(d.y)+margin + marginY);
 
     
-    
+    while (res.t){
+        if (!anim){
+            await sleep(1)
+        }
+        else{
+            selectedData = par === "H"? res.Napory.shift(): par === "S"? res.Skorosty.shift():res.Davleniya.shift();
+            console.log(selectedData)
+            updateGraph(selectedData, colorOfLine);
+            timeLabel = d3.select('.labelTime')
+                        .text('t = ' + res.t.shift().toFixed(2)+ 'c');
+            await sleep(100)
+        }
+    };
 
-    socket.on('res', res => {
-        res = JSON.parse(res)
-        t = res.t;
-        selectedData = par === "H"? res.Napory: par === "S"? res.Skorosty:res.Davleniya
-        updateGraph(selectedData, colorOfLine)
-        timeLabel = d3.select('.labelTime')
-                        .text('t = ' + t.toFixed(2)+ 'c')
-        
-    });
     
     function updateGraph(newData, colorOfLine) {
         data = newData;
