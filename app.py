@@ -21,6 +21,7 @@ def handle_json(json_data):
     global an
     an = True
     data = json.loads(json_data)
+    
     generator = calculate(data)
     while True:
         if an:
@@ -30,7 +31,7 @@ def handle_json(json_data):
         else: 
             time.sleep(0.1)
 
-        
+
 
 
 
@@ -51,5 +52,5 @@ if __name__ == "__main__":
     # app.run(host ='0.0.0.0', port = 80)
     # app.run(debug = True)
     
-    socketio.run(app, host ='0.0.0.0', port = 80)
+    socketio.run(app)
     

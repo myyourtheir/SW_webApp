@@ -139,6 +139,7 @@ startBtn.onclick = function () {
             "gateValveParams": gateValveParams,
             "safeValveParams": safeValveParams
         }
+        
         socket.emit('json', JSON.stringify(req));
         topMenuBtns1.style.display = "none";
         topMenuBtns2.style.display = "inline";
