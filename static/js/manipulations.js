@@ -448,19 +448,31 @@ objBtns[2].onclick = function () {
             let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
             g.setAttribute('class', 'gateValve')
 
+            let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+            path.setAttribute("d", "M " + x + " " + y + " L " + x + " " + (parseInt(y) + 1.25*parseInt(dy)).toString());
+            path.style.stroke = "#000";
+            path.style.strokeWidth = "2px";
+
+
+            y = (parseInt(y) + 1.25*parseInt(dy)).toString();
+            x = (parseInt(x) - parseInt(dx)/2).toString();
+
             let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
             pg.setAttribute('fill', 'white')
             pg.setAttribute('stroke', '#000')
             pg.setAttribute("points",
-                x + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
-                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) - parseInt(dy / 2)).toString() +
-                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) + parseInt(dy / 2)).toString() +
-                ' ' + x + "," + (parseInt(y) - parseInt(dy / 2)).toString()
+                x + "," + (parseInt(y) + parseInt(dy)/ 2).toString() +
+                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) - parseInt(dy)/ 2).toString() +
+                ' ' + (parseInt(x) + parseInt(dx)).toString() + "," + (parseInt(y) + parseInt(dy)/ 2).toString() +
+                ' ' + x + "," + (parseInt(y) - parseInt(dy)/ 2).toString()
             );
             pg.setAttribute('stroke-width', '2');
 
-            x = (parseInt(x) + parseInt(dx)).toString();
-
+            y = (parseInt(y) - 1.25*parseInt(dy)).toString();
+            x = (parseInt(x) + parseInt(dx)/2).toString();
+            // x = (parseInt(x) + 5).toString();
+            
+            g.appendChild(path);
             g.appendChild(pg);
             svg.appendChild(g);
 
@@ -502,6 +514,14 @@ objBtns[3].onclick = function () {
             let g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
             g.setAttribute('class', 'safeValve')
 
+            let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+            path.setAttribute("d", "M " + x + " " + y + " L " + x + " " + (parseInt(y) - 0.5*parseInt(dy)).toString());
+            path.style.stroke = "#000";
+            path.style.strokeWidth = "2px";
+
+            y = (parseInt(y) - 0.5*parseInt(dy)).toString();
+            x = (parseInt(x) - parseInt(dx)/2).toString();
+            
             let pg = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
             pg.setAttribute('fill', 'white')
             pg.setAttribute('stroke', '#000')
@@ -525,9 +545,10 @@ objBtns[3].onclick = function () {
                 ' ' + (parseInt(x) + parseInt(dx / 2)).toString() + "," + (parseInt(y) - 27).toString()
             );
 
+            y = (parseInt(y) + 0.5*parseInt(dy)).toString();
+            x = (parseInt(x) + parseInt(dx)/2).toString();
 
-            x = (parseInt(x) + parseInt(dx)).toString();
-
+            g.appendChild(path);
             g.appendChild(pg);
             g.appendChild(pl)
             svg.appendChild(g);

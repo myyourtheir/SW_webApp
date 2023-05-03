@@ -11,7 +11,7 @@ const drawChart = async (res, par) => {
     if (par==='H'){
         markerY = 'H, м';
         colorOfLine = 'red';
-        marginY = 150;
+        marginY = 175;
         minVal = 600 ;
         maxVal = -200;
         
