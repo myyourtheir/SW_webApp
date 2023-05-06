@@ -25,7 +25,7 @@ const drawChart = async (res, par) => {
         
     };
     if (par==='P'){
-        markerY = 'p, Па';
+        markerY = 'p, МПа';
         colorOfLine = 'green';
         marginY = -10;
         minVal = 5;
@@ -117,18 +117,19 @@ const drawChart = async (res, par) => {
     .x(d => scaleX(d.x)+100)
     .y(d => scaleY(d.y)+margin + marginY);
 
-    
+       
+    let i =0;
     while (res.t){
         if (!anim){
             await sleep(1)
         }
         else{
-            selectedData = par === "H"? res.Napory.shift(): par === "S"? res.Skorosty.shift():res.Davleniya.shift();
-            console.log(selectedData)
+            selectedData = par === "H"? res.Napory[i]: par === "S"? res.Skorosty[i]:res.Davleniya[i];
             updateGraph(selectedData, colorOfLine);
             timeLabel = d3.select('.labelTime')
-                        .text('t = ' + res.t.shift().toFixed(2)+ 'c');
-            await sleep(100)
+                        .text('t = ' + res.t[i].toFixed(2)+ 'c');
+            i++;
+            await sleep(50)
         }
     };
 
@@ -154,6 +155,45 @@ const drawChart = async (res, par) => {
             .attr("fill", "none")
             .attr("stroke", colorOfLine)
             .attr("stroke-width", 2);
-    }
+    };
 }
+
+//  // Define the tooltip element
+//  var tooltip = d3.select("#mainSVG")
+//     .append("div")
+//     .attr("id", "tooltip")
+//     .style("display", "none");
+
+// // Define the tooltip content
+// var tooltipContent = function(d) {
+//     return "X: " + d.x + "<br/>Y: " + d.y;
+// };
+
+// // Attach the mouseover event to the line chart data points
+// d3.select("path.line")
+//     .on("mouseover", function(d) {
+//         tooltip.html(tooltipContent(d))
+//             .style("display", "block")
+//             .style("left", (d3.event.pageX + 10) + "px")
+//             .style("top", (d3.event.pageY - 10) + "px");
+// })
+//     .on("mouseout", function(d) {
+//         tooltip.style("display", "none");
+// });
+
+// var tooltip2 = d3.select(".axis")
+//   .append("div")
+//     .style("position", "absolute")
+//     .style("visibility", "hidden")
+//     .style("background-color", "white")
+//     .style("border", "solid")
+//     .style("border-width", "1px")
+//     .style("border-radius", "5px")
+//     .style("padding", "10px")
+//     .html("<p>I'm a tooltip written in HTML</p><img src='https://github.com/holtzy/D3-graph-gallery/blob/master/img/section/ArcSmal.png?raw=true'></img><br>Fancy<br><span style='font-size: 40px;'>Isn't it?</span>");
+
+// d3.select("path.line")
+//         .on("mouseover", function(){return tooltip2.style("visibility", "visible");})
+//         .on("mousemove", function(){return tooltip2.style("top", (event.pageY-2390)+"px").style("left",(event.pageX-800)+"px");})
+//         .on("mouseout", function(){return tooltip2.style("visibility", "hidden");});
 

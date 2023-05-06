@@ -219,7 +219,7 @@ display: none;
   min-height:1500px ;
   transform-origin: 0px 0px;
   transform: scale(1) translate(0px, 0px);
-  cursor: grab;
+  
   position: absolute; 
   border-width: 1px; 
   overflow: hidden; 
@@ -232,7 +232,9 @@ display: none;
   border: 3px solid black;
 }
 
-
+.workSpace:active{
+  cursor: grab;
+}
 
 .topSide{
   /* position: sticky;

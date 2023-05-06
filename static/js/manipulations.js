@@ -70,9 +70,9 @@ delBtn.onclick = function () {
     let lastElem = pipeline.pop();
 
     if (lastElem === 'pipe') {
-        pipeParams.pop();
         d3.selectAll('.pipe:last-of-type').remove();
-        x = x - 100;
+        x = (parseInt(x) - pipeParams[pipeParams.length-1][0]).toString();
+        pipeParams.pop();
 
     } else if (lastElem === 'pump') {
         pumpParams.pop();
@@ -81,11 +81,11 @@ delBtn.onclick = function () {
     } else if (lastElem === 'gateValve') {
         gateValveParams.pop();
         d3.selectAll('.gateValve:last-of-type').remove();
-        x = x - 40
+        
     } else if (lastElem === 'safeValve') {
         safeValveParams.pop()
         d3.selectAll('.safeValve:last-of-type').remove();
-        x = x - 40;
+        
     }
 };
 
@@ -166,8 +166,7 @@ startBtn.onclick = function () {
                 clearInterval(interval);
                 drawChart(fullData, 'H'); 
                 drawChart(fullData, 'P');
-                drawChart(fullData, 'S');  
-                console.log("processed")
+                drawChart(fullData, 'S');
             }
         }, 1);
         

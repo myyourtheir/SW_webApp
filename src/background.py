@@ -13,9 +13,11 @@ def count_len_N_numOfElementsInLists(data): #передаем json считае�
         num_of_elements_in_lists += data['pipeParams'][i][0]
         L += data['pipeParams'][i][0] * 1000
         N += data['pipeParams'][i][0]
-    num_of_elements_in_lists += len(data['pumpParams']) * 2 + len(data['gateValveParams']) * 2 +len(data['safeValveParams']) * 2+ 2
+    num_of_elements_in_lists += len(data['pumpParams']) * 2 + len(data['gateValveParams']) * 2 +len(data['safeValveParams']) * 2 + 2
     L+=2000
-    N += 3
+    N += 2 
+    # + len(data["pumpParams"])+len(data["gateValveParams"])+len(data["safeValveParams"])
+
     return (L, N, num_of_elements_in_lists)
 
 def make_x(data, L, N):
@@ -47,7 +49,7 @@ def calculate(data):
     p20 = 156960 
     t = 0
     g = 9.81
-    c = 1000
+    c = bf.c
     
     
     
@@ -56,20 +58,18 @@ def calculate(data):
     t_rab = data['condParams'][0][0]
     
     
-    
     L = count_len_N_numOfElementsInLists(data)[0]
     N = count_len_N_numOfElementsInLists(data)[1]
     num_of_elements_in_lists = count_len_N_numOfElementsInLists(data)[2]
     
     T = L / (N * c)
 
-    P_O = [156960] * num_of_elements_in_lists
+    
     V_O = [0.1] * num_of_elements_in_lists
-    H_O = []
-    for i in P_O:
-        H_O.append(i / ro / g)
+    H_O = [100] * num_of_elements_in_lists
 
-    Davleniya = [P_O]
+
+    Davleniya = [[(H_O[i]-bf.vis_otm[i])*ro*g for i in range(num_of_elements_in_lists)]]
     Skorosty = [V_O]
     Napory = [H_O]
     
@@ -97,6 +97,7 @@ def calculate(data):
                  1, data['pipeParams'][count_pipe_iter][1],
                  data['pumpParams'][count_pump_iter][4],
                  data['pumpParams'][count_pump_iter][3], t, v, ro, T))
+                
                 main.append(bf.pump_method(Davleniya, Skorosty, iter,
                  data['pumpParams'][count_pump_iter][0],
                  data['pumpParams'][count_pump_iter][1],
@@ -176,12 +177,12 @@ def calculate(data):
 if __name__ =='__main__':
     
 
-    js = {'condParams': [[500, 850, 10]],
-    'pipeline': ['pump', 'pipe'],
-    'pipeParams': [[100, 1], [100, 1]],
-    'pumpParams': [[310, 8e-07, 1, 0, 20]], 
+    js = {'condParams': [[1, 850, 10]],
+    'pipeline': ['pipe'],
+    'pipeParams': [[100, 1]],
+    'pumpParams': [], 
     'gateValveParams': [],
-    'safeValveParams': [[1, 900000]]}
+    'safeValveParams': []}
     
     
     generator = calculate(js)

@@ -21,7 +21,7 @@ def handle_json(json_data):
     # global an
     # an = True
     data = json.loads(json_data)
-    
+    print(data)
     generator = calculate(data)
     while True:
         res =  json.dumps(next(generator))

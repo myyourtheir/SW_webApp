@@ -67,6 +67,9 @@ def pump_method(P, V, i, a, b, char, chto_vivodim, d, t_vkl, t_char, t, v, ro, T
     else:
         w = 0
 
+
+   
+    
     a = (w / w0) ** 2 * a  # 302.06   Характеристика насоса # b = 8 * 10 ** (-7)
     S = np.pi * (d / 2) ** 2
     Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
@@ -250,3 +253,5 @@ if __name__ =='__main__':
     print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 1, 0.5, 9*10**5, 1, 1, 10**(-6), 800, 1))
     print(safe_valve_method([[2500000]*4], [[3,3,3,3]], 1 , 2, 0.5, 9*10**5, 1, 1, 10**(-6), 800, 1))
     print(" ")
+
+    
