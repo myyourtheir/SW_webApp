@@ -45,8 +45,7 @@ def make_x(data, L, N):
 
 
 def calculate(data):
-    p10 = 156960  # 784800   100м
-    p20 = 156960 
+    
     t = 0
     g = 9.81
     c = bf.c
@@ -63,10 +62,11 @@ def calculate(data):
     num_of_elements_in_lists = count_len_N_numOfElementsInLists(data)[2]
     
     T = L / (N * c)
-
+    p10 = (0-bf.vis_otm[0])*ro*g   
+    p20 = (0-bf.vis_otm[N])*ro*g
     
-    V_O = [0.1] * num_of_elements_in_lists
-    H_O = [100] * num_of_elements_in_lists
+    V_O = [0.00000001] * num_of_elements_in_lists
+    H_O = [0] * num_of_elements_in_lists
 
 
     Davleniya = [[(H_O[i]-bf.vis_otm[i])*ro*g for i in range(num_of_elements_in_lists)]]

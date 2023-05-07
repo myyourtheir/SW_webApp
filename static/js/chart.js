@@ -1,67 +1,66 @@
 const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const drawCharts = async (res, par) => {
 
 
-const drawChart = async (res, par) => {
-    let markerY = NaN;
-    let colorOfLine =NaN;
-    let marginY = NaN;
-    let t = 0;
-    if (par==='H'){
-        markerY = 'H, м';
-        colorOfLine = 'red';
-        marginY = 175;
-        minVal = 600 ;
-        maxVal = -200;
-        
-    };
-    if (par==='S'){
-        markerY = 'V, м/c';
-        colorOfLine = 'steelblue';
-        marginY = -10;
-        minVal = 5 ;
-        maxVal = -1 ;
-        
-    };
-    if (par==='P'){
-        markerY = 'p, МПа';
-        colorOfLine = 'green';
-        marginY = -10;
-        minVal = 5;
-        maxVal = -2;
-        
-       
+    let hChart = {
+        markerY: 'H, м',
+        colorOfLine : 'red',
+        minVal : 600,
+        maxVal : -200,
+        marginTop: 175,
     };
 
-    var height = 300, 
-    width = x, 
-    margin= 30;
+    let pChart = {
+        markerY: 'p, МПа',
+        colorOfLine : 'green',
+        minVal : 5,
+        maxVal : -2,
+        marginTop : 520,
+    };
+    
+    let sChart = {
+        markerY : 'V, м/c',
+        colorOfLine : 'steelblue',
+        minVal : 5,
+        maxVal : -1,
+        marginTop : 885,
+    };
 
+    let margin1 = {right: 100, bottom: 40, left: 100 };
+    
+    const width = parseInt(x)-margin1.left;
+    const height = 300;
+    
     // 1 chart(H)
-    
-    var height = 300, 
-    width = x, 
-    margin= 30;
-    
-    
-
-    var svg = d3.select(".workSpace")
-        .append("svg")
-        .attr("class", "axis")
-        .attr("width", width + 100)
-        .attr("height", height + marginY);
-
-    var xAxisLength = width - 100;
-    var yAxisLength = height - 2 * margin;
-
     var scaleX = d3.scaleLinear()
                     // .domain([d3.min(res.x),d3.max(res.x)])
-                    .range([0, xAxisLength]);
+                    .range([0, width]);
 
     var scaleY = d3.scaleLinear()
-                    .domain([maxVal, minVal])
-                    .range([yAxisLength, 0]);
+                    .domain([hChart.maxVal, hChart.minVal])
+                    .range([height, 0]);
+    
+    const line = d3.line()
+                .x(d => scaleX(d.x))
+                .y(d => scaleY(d.y));
+
+    var svg = d3.select("#mainSVG")
+        .append("svg")
+            .attr("class", "charts")
+            .attr("width", width + margin1.left + margin1.right)
+            .attr("height", height + hChart.marginTop + margin1.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin1.left},${hChart.marginTop})`);
+        
+
+    const tooltip = d3.select(".workSpace")
+        .append("div")
+            .attr("class", "tooltip");
+
     if (x<=200){
         var xAxis = d3.axisBottom(scaleX)
                     .ticks(3, ".0f");
@@ -76,59 +75,67 @@ const drawChart = async (res, par) => {
     svg.append("g")       
         .attr("class", "x-axis")
         .attr("transform",  // сдвиг оси вниз и вправо
-            "translate(" +  100 + "," + (height + marginY - margin)+ ")")
+        `translate(0,${height})`)
         .call(xAxis)
         .append("text")
-        .attr("x", width - margin - 40)
+        .attr("x", width + 30)
         .attr("y", 5)
         .attr("text-anchor", "end")
         .style("font-size", "14px")
         .style('fill', 'black')
         .text('x, м');
         
-
     svg.append("g")       
         .attr("class", "y-axis")
-        .attr("transform", // сдвиг оси вниз и вправо на margin
-                "translate(" + 100 + "," + (margin + marginY) + ")")
         .call(yAxis)
         .append("text")
-        .attr("x", margin - 40)
-        .attr("y", margin - 40)
+        .attr("x", -20)
+        .attr("y", -10)
         .attr("text-anchor", "end")
         .style("font-size", "14px")
         .style('fill', 'black')
-        .text(markerY);
-    if (par==='H'){
+        .text(hChart.markerY);
+    
+    
     svg.append("text")
         .attr('class', 'labelTime')
         .attr("x", width)
-        .attr("y", marginY + margin)
+        .attr("y", 0 )
         .attr("text-anchor", "end")
         .style("font-size", "14px")
         .style('fill', 'black')
-        .text(t);
-    }
+        .text(0);
     
     svg.append('path')
         .attr('class', 'line');
 
-    const line = d3.line()
-    .x(d => scaleX(d.x)+100)
-    .y(d => scaleY(d.y)+margin + marginY);
+    const circle = svg.append("circle")
+        .attr("r", 0)
+        .attr("fill", "black")
+        .style("stroke", "white")
+        .attr("opacity", .70)
+        .style("pointer-events", "none");
 
-       
-    let i =0;
-    while (res.t){
+    const listeningRect = svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("class", "rect")
+    
+    
+
+
+
+    let iter_data =0;
+    while (iter_data<=fullData.t.length-2){
         if (!anim){
             await sleep(1)
         }
         else{
-            selectedData = par === "H"? res.Napory[i]: par === "S"? res.Skorosty[i]:res.Davleniya[i];
-            updateGraph(selectedData, colorOfLine);
+            selectedData = par === "H"? res.Napory[iter_data]: par === "S"? res.Skorosty[iter_data]:res.Davleniya[iter_data];
+            updateGraph(selectedData, hChart.colorOfLine);
             timeLabel = d3.select('.labelTime')
-                        .text('t = ' + res.t[i].toFixed(2)+ 'c');
-            i++;
+                        .text('t = ' + res.t[iter_data].toFixed(2)+ 'c');
+            iter_data++;
             await sleep(50)
         }
     };
@@ -136,7 +143,7 @@ const drawChart = async (res, par) => {
     
     function updateGraph(newData, colorOfLine) {
         data = newData;
-      
+        
         // Update the domains
         scaleX.domain(d3.extent(data, d => d.x));
         // scaleY.domain(d3.extent(data, d => d.y));
@@ -155,45 +162,45 @@ const drawChart = async (res, par) => {
             .attr("fill", "none")
             .attr("stroke", colorOfLine)
             .attr("stroke-width", 2);
+
+        listeningRect.on("mousemove", function (event) {
+            let [xCoord] = d3.pointer(event, this);
+            let bisectX = d3.bisector(d => d.x).left;
+            let x0 = scaleX.invert(xCoord);
+            let i = bisectX(data, x0, 1);
+            let d0 = data[i - 1];
+            let d1 = data[i];
+            let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
+            let xPos = scaleX(d.x);
+            let yPos = scaleY(d.y);
+            
+    
+    
+        // Update the circle position
+    
+            circle.attr("cx", xPos)
+            .attr("cy", yPos);
+    
+            // Add transition for the circle radius
+    
+            circle.transition()
+            .duration(50)
+            .attr("r", 4);
+    
+            // add in  our tooltip
+    
+            tooltip
+                .style("display", "block")
+                .style("left", `${xPos + 100}px`)
+                .style("top", `${yPos + 50}px`)
+                .html(`<strong>Координата: </strong> ${d.x/1000} км<br><strong>Напор: </strong> ${d.y !== undefined ? (d.y).toFixed(0) + " м": 'N/A'}`)
+        });
+            listeningRect.on("mouseleave", function () {
+                circle.transition()
+                .duration(50)
+                .attr("r", 0);
+            
+            tooltip.style("display", "none");
+            });
     };
 }
-
-//  // Define the tooltip element
-//  var tooltip = d3.select("#mainSVG")
-//     .append("div")
-//     .attr("id", "tooltip")
-//     .style("display", "none");
-
-// // Define the tooltip content
-// var tooltipContent = function(d) {
-//     return "X: " + d.x + "<br/>Y: " + d.y;
-// };
-
-// // Attach the mouseover event to the line chart data points
-// d3.select("path.line")
-//     .on("mouseover", function(d) {
-//         tooltip.html(tooltipContent(d))
-//             .style("display", "block")
-//             .style("left", (d3.event.pageX + 10) + "px")
-//             .style("top", (d3.event.pageY - 10) + "px");
-// })
-//     .on("mouseout", function(d) {
-//         tooltip.style("display", "none");
-// });
-
-// var tooltip2 = d3.select(".axis")
-//   .append("div")
-//     .style("position", "absolute")
-//     .style("visibility", "hidden")
-//     .style("background-color", "white")
-//     .style("border", "solid")
-//     .style("border-width", "1px")
-//     .style("border-radius", "5px")
-//     .style("padding", "10px")
-//     .html("<p>I'm a tooltip written in HTML</p><img src='https://github.com/holtzy/D3-graph-gallery/blob/master/img/section/ArcSmal.png?raw=true'></img><br>Fancy<br><span style='font-size: 40px;'>Isn't it?</span>");
-
-// d3.select("path.line")
-//         .on("mouseover", function(){return tooltip2.style("visibility", "visible");})
-//         .on("mousemove", function(){return tooltip2.style("top", (event.pageY-2390)+"px").style("left",(event.pageX-800)+"px");})
-//         .on("mouseout", function(){return tooltip2.style("visibility", "hidden");});
-

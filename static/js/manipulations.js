@@ -164,9 +164,9 @@ startBtn.onclick = function () {
         let interval = setInterval(() => {
             if (fullData.t.length >= req.condParams[0][0]*0.2){
                 clearInterval(interval);
-                drawChart(fullData, 'H'); 
-                drawChart(fullData, 'P');
-                drawChart(fullData, 'S');
+                drawCharts(fullData, 'H'); 
+                // drawChart1(fullData, 'P');
+                // drawChart1(fullData, 'S');
             }
         }, 1);
         
