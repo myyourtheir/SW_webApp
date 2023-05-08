@@ -120,7 +120,15 @@ resumeBtn.onclick = function animResume() {
     // socket.emit('anim', anim)
    
 };
-
+let controller = new AbortController();
+let reloadBtn = document.getElementById('reloadBtn');
+reloadBtn.onclick = ()=>{
+    let iter_data = 0
+    controller.abort();
+    controller = new AbortController();
+    d3.selectAll('.tooltip').remove()
+    drawCharts(fullData, controller, iter_data)
+}
 
 let topMenuBtns1 = document.getElementById('manipulatingButtons1')
 let topMenuBtns2 = document.getElementById('manipulatingButtons2');
@@ -164,7 +172,7 @@ startBtn.onclick = function () {
         let interval = setInterval(() => {
             if (fullData.t.length >= req.condParams[0][0]*0.2){
                 clearInterval(interval);
-                drawCharts(fullData); 
+                drawCharts(fullData, controller, 0); 
                 // drawCharts(fullData, 'P');
                 // drawCharts(fullData, 'S');
             }

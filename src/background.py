@@ -110,6 +110,7 @@ def calculate(data):
 
             elif y == 'pipe':
                 ran = data['pipeParams'][count_pipe_iter][0] - 2 if count_pipe_iter == 0 and len(data["pipeParams"][0]) == 1 else data['pipeParams'][count_pipe_iter][0]-1 if  count_pipe_iter ==(len(data["pipeParams"][0]) - 1) or count_pipe_iter == 0 else data['pipeParams'][count_pipe_iter][0]
+                
                 for j in range(ran):
                         main.append(bf.pipe_method(Davleniya, Skorosty, iter, data['pipeParams'][count_pipe_iter][1], v, ro, T))
                         iter += 1
