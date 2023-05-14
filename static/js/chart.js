@@ -284,12 +284,19 @@ const drawCharts = async (res, controller, iter_data=0) => {
             // scaleY.domain(d3.extent(data, d => d.y));
         
             // Update the axes
-            svg.select('.x-axis')
+            svgH.select('.x-axis')
+            .call(xAxis);
+            svgP.select('.x-axis')
+            .call(xAxis);
+            svgS.select('.x-axis')
             .call(xAxis);
         
-            // svg.select('.y-axis')
-            //   .call(yAxisH);
-        
+            svgH.select('.y-axis')
+            .call(yAxisH);
+            svgP.select('.y-axis')
+            .call(yAxisP);
+            svgS.select('.y-axis')
+            .call(yAxisS);
             // Update the line path
             svg.select(line)
             .datum(data)
