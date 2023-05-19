@@ -16,6 +16,7 @@ let pipeParams = [];
 let pumpParams = [];
 let gateValveParams = [];
 let safeValveParams = [];
+let boundaryParams = [[1,0], [1, 0]];
 
 // Увеличиваем масштаб .workspace при skroll
 var scale = 1,
@@ -100,6 +101,7 @@ resetBtn.onclick = function () {
     pumpParams = [];
     gateValveParams = [];
     safeValveParams = [];
+    boundaryParams = [[1,0], [1, 0]]
     y = '150';
     x = '100';
 }
@@ -145,7 +147,8 @@ startBtn.onclick = function () {
             "pipeParams": pipeParams,
             "pumpParams": pumpParams,
             "gateValveParams": gateValveParams,
-            "safeValveParams": safeValveParams
+            "safeValveParams": safeValveParams,
+            "boundaryParams" : boundaryParams
         }
         
         socket.emit('json', JSON.stringify(req));
@@ -209,6 +212,12 @@ let x = '100';
 
 // действия кнопок
 //функции установки начального значения
+function setNoneBoundaryConv() {
+    let boundaryCond = document.getElementById('boundaryCond');
+    boundaryCond.style.display = 'none';
+    leftBoundaryVal.value = '0'
+    rightBoundaryVal.value = "0"
+}
 function setNoneConv() {
     let envCond = document.getElementById('envCond');
     envCond.style.display = 'none';
@@ -228,7 +237,7 @@ function setNonePump() {
     pumpForm = document.getElementById('pumpForm');
     pumpForm.style.display = 'none';
     document.getElementById('aOfPump').value = '310';
-    document.getElementById('bOfPump').value = '0.0000008';
+    document.getElementById('bOfPump').value = '0.000008';
     document.getElementById('timePump').value = '0';
     document.getElementById('Run-outTimeOfPump').value = '20';
 }
@@ -248,6 +257,83 @@ function setNoneSafeValve() {
     document.getElementById('startPresure').value = '9';
     
 }
+// Меню граничных условий
+
+
+    
+
+let leftRadioSelected
+let rightRadioSelected
+let toolBarBoundaryConditions = document.getElementById('toolBarBoundaryConditions');
+toolBarBoundaryConditions.onclick = function () {
+    setNonePipe();
+    setNoneGateValve();
+    setNonePump();
+    setNoneConv();
+    let leftBoundaryLbl = document.getElementById("leftBoundaryLbl")
+    let leftBoundaryVal = document.getElementById('leftBoundaryVal')
+    let leftRad = document.getElementsByName("leftBoundary")
+    let leftBoundaryInput = document.getElementById("leftBoundaryInput")
+    let leftBoundaryValLbl = document.getElementById('leftBoundaryValLbl')
+    leftRad.forEach(function(radioButton) {
+        radioButton.addEventListener("change", function() {
+        // Get the selected value
+        let selectedValue = this.value;
+        if (selectedValue==="1"){
+                    leftBoundaryValLbl.innerHTML = " Па";
+                    leftBoundaryLbl.innerHTML = "Давление на левой границе:";
+                  
+            }else if (selectedValue==="2"){
+                    leftBoundaryValLbl.innerHTML = " м/с";
+                    leftBoundaryLbl.innerHTML = "Скорость на левой границе:";
+                
+                }
+        });
+    });
+    let rightBoundaryLbl = document.getElementById("rightBoundaryLbl")
+    let rightBoundaryVal = document.getElementById('rightBoundaryVal')
+    let rightRad = document.getElementsByName("rightBoundary")
+    let rightBoundaryInput = document.getElementById("rightBoundaryInput")
+    let rightBoundaryValLbl = document.getElementById('rightBoundaryValLbl')
+    rightRad.forEach(function(radioButton) {
+        radioButton.addEventListener("change", function() {
+        // Get the selected value
+        let selectedValue = this.value;
+        if (selectedValue==="1"){
+                    rightBoundaryValLbl.innerHTML = " Па";
+                    rightBoundaryLbl.innerHTML = "Давление на правой границе:";
+                    
+            }else if (selectedValue==="2"){
+                    rightBoundaryValLbl.innerHTML = " м/с";
+                    rightBoundaryLbl.innerHTML = "Скорость на правой границе:";
+                    
+                }
+        });
+    });
+
+    let boundaryCond = document.getElementById('boundaryCond');
+    boundaryCond.style.display = 'block';
+    let closeFavBoundaryCond = document.getElementById('closeFavBoundaryCond')
+    closeFavBoundaryCond.onclick = function () {
+        setNoneBoundaryConv()
+    }
+    let boundaryCondBtn = document.querySelector('#boundaryCondBtn')
+    boundaryCondBtn.onclick = function () {
+        if (boundaryParams.length === 0) {
+            boundaryParams.push([parseInt(document.querySelector('input[name="leftBoundary"]:checked').value), parseInt(leftBoundaryVal.value)], [parseInt(document.querySelector('input[name="rightBoundary"]:checked').value), parseInt(rightBoundaryVal.value)] )
+            setNoneBoundaryConv();
+        }
+        else {
+            boundaryParams.pop();
+            boundaryParams.pop();
+            boundaryParams.push([parseInt(document.querySelector('input[name="leftBoundary"]:checked').value), parseInt(leftBoundaryVal.value)], [parseInt(document.querySelector('input[name="rightBoundary"]:checked').value), parseInt(rightBoundaryVal.value)] )
+            setNoneBoundaryConv();
+        }
+    }
+
+}
+
+
 
 // Меню параметров среды
 let toolBarInnerCondBtn = document.getElementById('toolBarInnerConditions');
@@ -255,6 +341,7 @@ toolBarInnerCondBtn.onclick = function () {
     setNonePipe();
     setNoneGateValve();
     setNonePump();
+    setNoneBoundaryConv();
 
     let envCond = document.getElementById('envCond');
     envCond.style.display = 'block';
@@ -294,6 +381,7 @@ objBtns[0].onclick = function () {
     setNonePump();
     setNoneConv();
     setNoneSafeValve();
+    setNoneBoundaryConv();
 
     pipeForm = document.getElementById('pipeForm');
     pipeForm.style.display = 'block';
@@ -359,6 +447,7 @@ objBtns[1].onclick = function () {
     setNoneGateValve();
     setNoneConv();
     setNoneSafeValve();
+    setNoneBoundaryConv();
 
     pumpForm = document.getElementById('pumpForm');
     pumpForm.style.display = 'block';
@@ -429,6 +518,7 @@ objBtns[2].onclick = function () {
     setNoneConv();
     setNonePump();
     setNoneSafeValve();
+    setNoneBoundaryConv();
 
     gateValveForm = document.getElementById('gateValveForm');
     gateValveForm.style.display = 'block';
@@ -496,6 +586,7 @@ objBtns[3].onclick = function () {
     setNoneConv();
     setNonePump();
     setNoneGateValve();
+    setNoneBoundaryConv();
 
     safeValveForm = document.getElementById('safeValveForm');
     safeValveForm.style.display = 'block';

@@ -309,6 +309,19 @@ display: none;
   border-radius: 20px;
   background-color: #bfbcbc;
 }
+#boundaryCond{
+  display: none; 
+  position: fixed;
+  top: 100px;
+  left: 150px;
+  height: 415px;
+  width: 310px;
+  z-index: 2;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #bfbcbc;
+}
+
 
 #conditionLbl{
   font-size: 22px;

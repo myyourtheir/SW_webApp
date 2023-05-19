@@ -168,19 +168,31 @@ def tap_method(P, V, i, chto_vivodim, char, t_char, d, t_otkr, procent ,t, v, ro
     else:
         return [p2, VV, H2]
 
-def right_boundary_method(P, V, i, p_const, d, v, ro, T):
+def right_boundary_method(P, V, i, char, p_V_const, d, v, ro, T):
 
     Ja = find_Ja(P[-1][i - 1], V[-1][i - 1], d, i, v, ro, T)
-    VV = (Ja - p_const) / (ro * c)
-    pp = p_const
-    H = count_H(p_const, i, VV, ro)
+    if char == 1:
+        pp = p_V_const
+        VV = (Ja - pp) / (ro * c)
+    else:
+        if p_V_const == 0:
+            p_V_const+=10**(-6)
+        VV = p_V_const
+        pp = Ja - ro*c*VV
+    H = count_H(pp, i, VV, ro)
     return [pp, VV, H]
 
-def left_boundary_method(P, V, i, p_const, d, v, ro, T):
+def left_boundary_method(P, V, i, char, p_V_const, d, v, ro, T):
     Jb = find_Jb(P[-1][i + 1], V[-1][i + 1], d, i, v, ro, T)
-    VV = (p_const - Jb) / (ro * c)
-    pp = p_const
-    H = count_H(p_const, i, VV, ro)
+    if char ==1:
+        pp = p_V_const
+        VV = (pp - Jb) / (ro * c)
+    else:
+        if p_V_const == 0:
+            p_V_const+=10**(-6)
+        VV = p_V_const
+        pp = Jb + ro*c*VV
+    H = count_H(pp, i, VV, ro)
     return [pp, VV, H]
 
 def safe_valve_method(P, V, i, chto_vivodim, Kvmax,  p_otkr, d1, d2, v, ro, T):

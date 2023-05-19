@@ -17,8 +17,10 @@
              <div class="toolBar">
                 <!-- <a href="#" class="toolbarItem">Файл</a> -->
                 <a href="#" class="toolbarItem" id="toolBarInnerConditions">Параметры среды</a>
+                <a href="#" class="toolbarItem" id="toolBarBoundaryConditions">Граничные условия</a>
             </div>  
             <span id="conditionLbl"></span>
+            <!-- <span id="boundaryLbl"></span> -->
             <div id = "manipulatingButtons2">
                 <div  class="topMenuBtns2"  id="pauseBtn">
                     <a href="#"><img src="{{url_for('static', filename = 'images/pauseBtn.svg')}}" alt="Пауза" height="40px" width="40px"></a>
@@ -62,6 +64,54 @@
             <span><input id="viscosity" class="textFieldInput" type="number" value="10">сСт</span>
             
             <input id="envCondBtn" class ="textFieldButton" type="submit" value="Добавить">
+        </div>
+    </div>
+
+<!-- Граничные условия -->
+    <div id="boundaryCond">
+        <div class = 'textField'>
+            <span id="closeFavBoundaryCond" class="closeFav"><img src="{{url_for('static', filename = 'images/closeFVG.svg')}}" alt="Закрыть" height="20px" width="20px"> </span>
+            
+            <!-- <label class="textFieldLabel">Левая граница</label>  -->
+            <fieldset>
+                <legend>Левая граница</legend>
+                <div>
+                  <input type="radio" id="leftPressure" name="leftBoundary" value="1"
+                         checked>
+                  <label for="leftPressure">Указать давление</label>
+                </div>
+
+                <div>
+                  <input type="radio" id="leftVelocity" name="leftBoundary" value="2">
+                  <label for="leftVelocity">Указать скорость</label>
+                </div>
+
+                <div id ="leftBoundaryInput">
+                    <label id = "leftBoundaryLbl" class="textFieldLabel">Давление на левой границе:</label>
+                    <input id="leftBoundaryVal" class="textFieldInput" type="number" value="0"><span id = "leftBoundaryValLbl"> Па</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Правая граница</legend>
+                <div>
+                  <input type="radio" id="rightPressure" name="rightBoundary" value="1"
+                         checked>
+                  <label for="rightPressure">Указать давление</label>
+                </div>
+
+                <div>
+                  <input type="radio" id="rightVelocity" name="rightBoundary" value="2">
+                  <label for="rightVelocity">Указать скорость</label>
+                </div>
+
+                <div id ="rightBoundaryInput">
+                    <label id = "rightBoundaryLbl" class="textFieldLabel">Давление на правой границе:</label>
+                    <input id="rightBoundaryVal" class="textFieldInput" type="number" value="0"><span id = "rightBoundaryValLbl">Па</span>
+                </div>
+            </fieldset>
+            
+            <input id="boundaryCondBtn" class ="textFieldButton" type="submit" value="Добавить">
         </div>
     </div>
 
@@ -122,7 +172,7 @@
             <input id="aOfPump" class="textFieldInput" type="number" value="310">
 
             <label class="textFieldLabel">Коэфициент аппроксимации b:</label>
-            <input id="bOfPump" class="textFieldInput" type="number" value="0.0000008">
+            <input id="bOfPump" class="textFieldInput" type="number" value="0.000008">
 
             <select name="pumpSelect" id="pumpSelect" class="objSelect">
                 <option value="1">Включается на</option>

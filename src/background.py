@@ -45,7 +45,8 @@ def make_x(data, L, N):
 
 
 def calculate(data):
-    
+    print(data['boundaryParams'][1][0])
+    print(data['boundaryParams'][1][1])
     t = 0
     g = 9.81
     c = bf.c
@@ -62,7 +63,7 @@ def calculate(data):
     num_of_elements_in_lists = count_len_N_numOfElementsInLists(data)[2]
     
     T = L / (N * c)
-    p10 = (0-bf.vis_otm[0])*ro*g   
+    p10 = (0-bf.vis_otm[0])*ro*g
     p20 = (0-bf.vis_otm[N])*ro*g
     
     V_O = [0.00000001] * num_of_elements_in_lists
@@ -127,13 +128,14 @@ def calculate(data):
                     count_tap_iter += 1
             
             elif y == 'right_boundary':
-                    main.append(bf.right_boundary_method(Davleniya, Skorosty, iter, p20, data['pipeParams'][count_pipe_iter - 1][1], v, ro, T))
+                    main.append(bf.right_boundary_method(Davleniya, Skorosty, iter, data['boundaryParams'][1][0], data['boundaryParams'][1][1], data['pipeParams'][count_pipe_iter - 1][1], v, ro, T))
                     iter += 1
 
             elif y == 'left_boundary':
                     main.append(
-                        bf.left_boundary_method(Davleniya, Skorosty, iter, p10, data['pipeParams'][count_pipe_iter][1], v, ro, T))
+                        bf.left_boundary_method(Davleniya, Skorosty, iter, data['boundaryParams'][0][0], data['boundaryParams'][0][1], data['pipeParams'][count_pipe_iter][1], v, ro, T))
                     iter += 1  
+                    # print(bf.left_boundary_method(Davleniya, Skorosty, iter, data['boundaryParams'][0][0], data['boundaryParams'][0][1], data['pipeParams'][count_pipe_iter][1], v, ro, T))
             elif y =='safeValve':
                 main.append(bf.safe_valve_method(Davleniya, Skorosty, iter, 1, data['safeValveParams'][count_safe_valve_iter][0], 
                                                 data['safeValveParams'][count_safe_valve_iter][1], 
@@ -184,7 +186,8 @@ if __name__ =='__main__':
     'pipeParams': [[100, 1]],
     'pumpParams': [], 
     'gateValveParams': [],
-    'safeValveParams': []}
+    'safeValveParams': [],
+    'boundaryParams': [[1, 0], [1, 0]]}
     
     
     generator = calculate(js)
