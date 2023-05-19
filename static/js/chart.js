@@ -16,15 +16,15 @@ let pChart = {
     colorOfLine : 'green',
     minVal : 7,
     maxVal : -1,
-    marginTop : 520,
+    marginTop : 570,
 };
 
 let sChart = {
     markerY : 'V, м/c',
     colorOfLine : 'steelblue',
-    minVal : 5,
+    minVal : 3.5,
     maxVal : -1,
-    marginTop : 885,
+    marginTop : 965,
 };
 
 
