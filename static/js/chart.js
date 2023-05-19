@@ -6,7 +6,7 @@ const sleep = (ms) => {
 let hChart = {
     markerY: 'H, м',
     colorOfLine : 'red',
-    minVal : 600,
+    minVal : 800,
     maxVal : -200,
     marginTop: 175,
 };
@@ -14,8 +14,8 @@ let hChart = {
 let pChart = {
     markerY: 'p, МПа',
     colorOfLine : 'green',
-    minVal : 5,
-    maxVal : -2,
+    minVal : 7,
+    maxVal : -1,
     marginTop : 520,
 };
 
@@ -33,7 +33,7 @@ const drawCharts = async (res, controller, iter_data=0) => {
         let margin1 = {right: 100, bottom: 40, left: 100 };
         
         const width = parseInt(x)-margin1.left;
-        const height = 300;
+        const height = 350;
         
         var scaleX = d3.scaleLinear()
                         // .domain([d3.min(res.x),d3.max(res.x)])
